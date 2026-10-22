@@ -62,7 +62,7 @@
 }
 
 .caret {
-  animation: cc-blink 1s step-start infinite;
+  animation: global(cc-blink) 1s step-start infinite;
 }
 
 .judge {
