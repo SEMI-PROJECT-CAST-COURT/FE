@@ -12,7 +12,8 @@ export async function submitSpeaking(liveTrialId, content, { signal, handlers })
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'text/event-stream',
+        // SSE 를 열기 전 오류(404 등)는 JSON 으로 오므로 함께 받는다(text/event-stream 만 보내면 서버가 오류 응답을 못 씀)
+        Accept: 'text/event-stream, application/json',
         Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({ content }),
