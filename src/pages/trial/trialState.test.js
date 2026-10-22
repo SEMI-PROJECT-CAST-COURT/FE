@@ -64,14 +64,25 @@ test('도전자·철인은 응답에 카드가 있어도 원문 미표시', () =
   }
 });
 
-test('상태 조회 결과로 현재 카드를 복원하고 모두 진술·최후 변론에서는 제거', () => {
+test('모두 진술·최후 변론에서도 서버가 보낸 단계별 카드를 표시', () => {
   let state = initialState(handoff());
+  state = reducer(state, { type: 'synced', status: { stage: 'OPENING', card: first, speakings: [] } });
+  assert.deepEqual(state.card, first);
   state = reducer(state, { type: 'synced', status: { stage: 'CARD', cardNo: 2, card: second, speakings: [] } });
+  assert.deepEqual(state.card, second);
+  state = reducer(state, { type: 'synced', status: { stage: 'CLOSING', card: second, speakings: [] } });
   assert.deepEqual(state.card, second);
   state = reducer(state, { type: 'synced', status: { stage: 'CLOSING', speakings: [] } });
   assert.equal(state.card, null);
-  state = reducer(state, { type: 'stage', data: { stage: 'OPENING', card: first } });
-  assert.equal(state.card, null);
+});
+
+test('검사 시작 카드 조회는 카드만 바꾸고 발언·단계는 유지', () => {
+  const before = initialState(handoff('CHICKEN', 'PROSECUTION'));
+  const own = { ...first, side: 'PROSECUTION' };
+  const state = reducer(before, { type: 'card', status: { stage: 'OPENING', card: own, speakings: [{ seq: 9 }] } });
+  assert.deepEqual(state.card, own);
+  assert.equal(state.speakings, before.speakings);
+  assert.deepEqual(state.stageInfo, before.stageInfo);
 });
 
 test('AI 실패·연결 끊김으로 턴을 버리면 카드·단계·구분선·최대 카드 번호 복원', () => {
@@ -101,9 +112,9 @@ test('turn_done 이후 상태 조회 실패로 로컬 확정해도 새 카드 �
   assert.equal(state.topic, '논점 2');
 });
 
-test('공방 종료 stage를 받은 즉시 현재 카드 제거', () => {
+test('최후 변론 stage를 받으면 마지막 공방 카드로 바꾸고 논점은 제거', () => {
   let state = reducer(initialState(handoff()), stage(first));
-  state = reducer(state, { type: 'stage', data: { stage: 'CLOSING' } });
-  assert.equal(state.card, null);
+  state = reducer(state, { type: 'stage', data: { stage: 'CLOSING', card: second } });
+  assert.deepEqual(state.card, second);
   assert.equal(state.topic, null);
 });

@@ -290,7 +290,7 @@ FE/
 ### 재판과 기록
 
 - 시작 요청 `{ caseId, role: PROSECUTION | DEFENSE, mode: CHICKEN | CHALLENGER | IRON }`. 잘못된 값은 400 `TRIAL_ROLE_INVALID` / `TRIAL_MODE_INVALID`, 없는 사건 404 `CASE_NOT_FOUND`, 이미 기록된 역할 409 `ROLE_ALREADY_RECORDED`.
-- 시작 결과 `{ trialId, stage: "OPENING", cards?, progress?, openingSpeaking? }`. 모드상 비공개 값은 키 자체가 빠진다. cards는 CHICKEN에서 빈 목록(공방 전)이므로 전체 카드 목록으로 사용하지 않는다. 현재 논점에 대응하는 사용자 측 카드 한 장은 CHICKEN의 stage·상태 응답 card(`{ cardId, side, title, body, weight, roundWeight }`)에서만 제공한다. 검사에게는 현재 검사 카드, 변호인에게는 선정된 변호인 대응 카드를 주며 대응 카드가 없으면 생략한다. weight는 카드 원래 가중치, roundWeight는 기존 검사 카드 기준 공방 평가 가중치이며 재판 화면에는 후자를 `공방 가중치`로 표시한다. 카드 원문은 모두 진술·최후 변론과 다른 모드에서는 생략한다. progress는 CHALLENGER에서만 온다. 시작 응답에 score는 없다(시작 게이지는 50).
+- 시작 결과 `{ trialId, stage: "OPENING", cards?, progress?, openingSpeaking? }`. 모드상 비공개 값은 키 자체가 빠진다. cards는 CHICKEN에서 빈 목록(공방 전)이므로 전체 카드 목록으로 사용하지 않는다. 현재 논점에 대응하는 사용자 측 카드 한 장은 CHICKEN의 stage·상태 응답 card(`{ cardId, side, title, body, weight, roundWeight }`)에서만 제공한다. 검사에게는 현재 검사 카드, 변호인에게는 선정된 변호인 대응 카드를 주며 대응 카드가 없으면 생략한다. weight는 카드 원래 가중치, roundWeight는 기존 검사 카드 기준 공방 평가 가중치이며 재판 화면에는 후자를 `공방 가중치`로 표시한다. 모두 진술에는 첫 공방 카드, 최후 변론·종료 후에는 마지막 공방 카드를 같은 card로 주며, 다른 모드에서는 생략한다. progress는 CHALLENGER에서만 온다. 시작 응답에 score는 없다(시작 게이지는 50).
 - 사용자가 변호인이면 서버가 시작 중에 검사 AI 모두 진술을 만들어 openingSpeaking으로 준다. 그래서 시작 요청이 몇 초 걸릴 수 있다. 검사 말풍선을 별도로 만들거나 AI를 다시 호출하지 않는다.
 - 진행 중 trialId는 UUID 문자열(서버 메모리), 판결 응답의 trialId는 DB 정수이다. 둘을 다른 이름으로 분리해 관리한다.
 - 진행 순서(서버가 관리): 모두 진술 2 → 공방 카드마다 6발언(검사 공격·변호인 반론 ×3) → 최후 변론 2. 모든 단계에서 검사가 먼저 말한다. 카드는 기본 2장이며, 2장 공방 직후 게이지가 47~53이면 3번째 카드가 추가된다(전체 16 또는 22발언). 프론트는 이 규칙으로 턴을 계산하지 않고 서버 이벤트만 따른다.
@@ -317,7 +317,7 @@ FE/
 |---|---|---|---|
 | 게이지(score·scoreAfter)·변화량(delta) | 공개 | 공개 | 비공개 |
 | 판정 4항목·등급(grade) | 공개 | 비공개 | 비공개 |
-| 현재 논점의 내 쪽 카드(stage·상태 응답 card) | 대응 카드 1장 공개 | 비공개 | 비공개 |
+| 단계별 내 쪽 카드(stage·상태 응답 card) | 대응 카드 1장 공개 | 비공개 | 비공개 |
 | 사건 경과(시작 응답 progress) | 비공개 | 공개 | 비공개 |
 
 비공개 필드는 키가 빠지거나 빈 객체로 온다. 누락·null·`{}`를 정상 처리하고, 숨긴 필드를 0이나 false로 채워 표시하지 않는다. 이전 판·모드의 데이터가 남아 노출되지 않게 상태를 초기화한다.

@@ -26,8 +26,9 @@ export function fromJudgeEvent(data) {
   return judge;
 }
 
+// 서버가 단계별로 정한 내 쪽 카드(모두 진술: 첫 공방 · 공방: 현재 · 최후 변론: 마지막 공방)
 function visibleCard(state, data) {
-  return state.mode === 'CHICKEN' && data.stage === 'CARD' && data.card?.side === state.role ? data.card : null;
+  return state.mode === 'CHICKEN' && data.card?.side === state.role ? data.card : null;
 }
 
 export function initialState(handoff) {
@@ -123,6 +124,9 @@ export function reducer(state, action) {
     case 'discard':
       // 반영되지 않은 턴: 임시 상태를 버리고 마지막 확정 상태로. 게이지도 확정 발언 기준으로 되돌린다.
       return { ...state, ...state.temp?.before, temp: null, phase: 'idle', fail: action.fail ?? null, score: lastScore(state) };
+    case 'card':
+      // 검사 시작: 상태 조회로 첫 공방 카드만 받는다(발언 · 단계는 바꾸지 않음)
+      return { ...state, card: visibleCard(state, action.status) };
     case 'phase':
       return { ...state, phase: action.phase };
     case 'verdictStart':

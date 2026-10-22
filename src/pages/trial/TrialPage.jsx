@@ -19,6 +19,8 @@ import { initialState, isFinishedStatus, reducer } from './trialState';
 import styles from './TrialPage.module.css';
 
 const MAX_CONTENT = 300; // Java length
+// 겁쟁이 모드 카드 패널: 단계마다 어느 공방의 카드인지 표시
+const CARD_PANEL_TAG = { OPENING: '첫 공방 카드', CARD: '현재 공방', CLOSING: '마지막 공방 카드' };
 
 function stageLabel(info, phase) {
   if (phase === 'verdict' || phase === 'verdicting' || phase === 'ready-verdict') return phase === 'ready-verdict' ? '최후 변론 종료' : '판결';
@@ -117,6 +119,10 @@ function TrialRoom({ handoff, workId, caseId }) {
   // 변호인 시작: 서버가 만든 검사 모두 진술의 판정 · 게이지를 상태 조회로 맞춘다(AI 재호출 없음)
   useEffect(() => {
     if (handoff.start.openingSpeaking) syncStatus('idle').catch(() => {});
+    // 겁쟁이 검사 시작: 모두 진술 중에도 첫 공방 카드를 보여 주기 위해 카드만 받아 온다
+    else if (handoff.mode === 'CHICKEN') {
+      fetchTrialStatus(handoff.start.trialId).then((status) => dispatch({ type: 'card', status })).catch(() => {});
+    }
   }, [handoff, syncStatus]);
 
   // 새로고침 · 탭 닫기: 경고 후 실제로 떠날 때 최선 노력으로 나가기 요청
@@ -614,17 +620,17 @@ function TrialRoom({ handoff, workId, caseId }) {
             </div>
           ) : null}
 
-          {mode === 'CHICKEN' && state.stageInfo.stage === 'CARD' ? (
+          {mode === 'CHICKEN' ? (
             <div className={styles.panel}>
               <div className={styles.panelHead}>
                 <h2 className={styles.h2}>내 쪽 근거 카드</h2>
-                <span className={styles.panelTag}>겁쟁이 모드</span>
+                <span className={styles.panelTag}>{CARD_PANEL_TAG[state.stageInfo.stage] ?? '겁쟁이 모드'}</span>
               </div>
               {state.card ? (
                 <EvidenceCard side={state.card.side} title={state.card.title} body={state.card.body}
                   weight={state.card.roundWeight} weightLabel="공방 가중치" />
               ) : (
-                <p className={styles.workSub}>현재 논점에 직접 대응하는 내 쪽 근거 카드가 없어.</p>
+                <p className={styles.workSub}>이 논점에 직접 대응하는 내 쪽 근거 카드가 없어.</p>
               )}
             </div>
           ) : null}
