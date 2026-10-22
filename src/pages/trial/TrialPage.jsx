@@ -607,16 +607,13 @@ function TrialRoom({ handoff, workId, caseId }) {
             <div className={styles.ironPanel}>철인 모드 · 판사 게이지와 발언별 판정은 판결 때 공개</div>
           )}
 
-          {mode === 'CHICKEN' && state.cards ? (
+          {mode === 'CHICKEN' && state.card ? (
             <div className={styles.panel}>
               <div className={styles.panelHead}>
-                <h2 className={styles.h2}>내 쪽 근거 카드</h2>
+                <h2 className={styles.h2}>현재 공방 카드</h2>
                 <span className={styles.panelTag}>겁쟁이 모드</span>
               </div>
-              {state.cards.length === 0 ? <span className={styles.workSub}>카드 없음</span> : null}
-              {state.cards.map((c) => (
-                <EvidenceCard key={c.cardId} side={role} title={c.title} body={c.body} weight={c.weight} />
-              ))}
+              <EvidenceCard side={state.card.side} title={state.card.title} body={state.card.body} weight={state.card.weight} />
             </div>
           ) : null}
 

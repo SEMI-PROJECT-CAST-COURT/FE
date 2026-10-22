@@ -13,7 +13,7 @@ import { DIFFICULTY_COLOR, DIFFICULTY_NAME, MODE_NAME, ROLE_NAME, TIER_RANGES, T
 import styles from './SetupPage.module.css';
 
 const MODE_INFO = [
-  { mode: 'CHICKEN', gauge: '공개', judge: '①~④ · 등급 · 변화량', cards: '공개', prog: '비공개' },
+  { mode: 'CHICKEN', gauge: '공개', judge: '①~④ · 등급 · 변화량', cards: '현재 공방 카드만', prog: '비공개' },
   { mode: 'CHALLENGER', gauge: '공개', judge: '변화량만', cards: '비공개', prog: '공개' },
   { mode: 'IRON', gauge: '비공개', judge: '비공개', cards: '비공개', prog: '비공개' },
 ];
@@ -149,7 +149,7 @@ export default function SetupPage() {
                   판사 게이지 <b style={{ color: openColor(m.gauge) }}>{m.gauge}</b>
                   <br />
                   발언 판정 <b style={{ color: openColor(m.judge) }}>{m.judge}</b>
-                  <br />내 쪽 근거 카드 <b style={{ color: openColor(m.cards) }}>{m.cards}</b>
+                  <br />공방 근거 카드 <b style={{ color: openColor(m.cards) }}>{m.cards}</b>
                   <br />
                   사건 경과 <b style={{ color: openColor(m.prog) }}>{m.prog}</b>
                 </span>

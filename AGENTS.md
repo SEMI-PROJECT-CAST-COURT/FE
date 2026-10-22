@@ -290,12 +290,12 @@ FE/
 ### 재판과 기록
 
 - 시작 요청 `{ caseId, role: PROSECUTION | DEFENSE, mode: CHICKEN | CHALLENGER | IRON }`. 잘못된 값은 400 `TRIAL_ROLE_INVALID` / `TRIAL_MODE_INVALID`, 없는 사건 404 `CASE_NOT_FOUND`, 이미 기록된 역할 409 `ROLE_ALREADY_RECORDED`.
-- 시작 결과 `{ trialId, stage: "OPENING", cards?, progress?, openingSpeaking? }`. 모드상 비공개 값은 키 자체가 빠진다. cards(`{ cardId, title, body, weight }`)는 CHICKEN에서 내 쪽 카드만, progress는 CHALLENGER에서만 온다. 시작 응답에 score는 없다(시작 게이지는 50).
+- 시작 결과 `{ trialId, stage: "OPENING", cards?, progress?, openingSpeaking? }`. 모드상 비공개 값은 키 자체가 빠진다. cards는 CHICKEN에서 빈 목록(공방 전)이므로 전체 카드 목록으로 사용하지 않는다. 현재 공방 카드 원문은 CHICKEN의 stage·상태 응답 card(`{ cardId, side, title, body, weight }`)에서만 제공하며, 모두 진술·최후 변론과 다른 모드에서는 생략한다. progress는 CHALLENGER에서만 온다. 시작 응답에 score는 없다(시작 게이지는 50).
 - 사용자가 변호인이면 서버가 시작 중에 검사 AI 모두 진술을 만들어 openingSpeaking으로 준다. 그래서 시작 요청이 몇 초 걸릴 수 있다. 검사 말풍선을 별도로 만들거나 AI를 다시 호출하지 않는다.
 - 진행 중 trialId는 UUID 문자열(서버 메모리), 판결 응답의 trialId는 DB 정수이다. 둘을 다른 이름으로 분리해 관리한다.
 - 진행 순서(서버가 관리): 모두 진술 2 → 공방 카드마다 6발언(검사 공격·변호인 반론 ×3) → 최후 변론 2. 모든 단계에서 검사가 먼저 말한다. 카드는 기본 2장이며, 2장 공방 직후 게이지가 47~53이면 3번째 카드가 추가된다(전체 16 또는 22발언). 프론트는 이 규칙으로 턴을 계산하지 않고 서버 이벤트만 따른다.
 - 서버 메모리의 진행 판 정리(TrialSessionStore): 같은 사용자가 새 재판을 시작하면 이전 판은 즉시 덮어써진다. 마지막 활동(시작·발언 제출) 뒤 30분이 지난 판은 만료로 보며, 별도 스케줄러 없이 다음 조회·저장 시점에 지워진다(만료된 판은 조회 시 404). 화면 이탈 후 진행 판의 정리는 이 서버 규칙과 나가기(DELETE)에 맡기고, 프론트는 자기 메모리 상태만 비운다.
-- 상태 결과 `{ stage, cardNo?, exchangeNo?, score?, speakings: [{ seq, stage, side, speaker, content, grade?, issue?, evidence?, rebut?, novel?, delta?, scoreAfter? }] }`. 발언이 모두 끝났으면 stage=CLOSING이고 cardNo·exchangeNo가 빠진다.
+- 상태 결과 `{ stage, cardNo?, exchangeNo?, topic?, card?, score?, speakings: [{ seq, stage, side, speaker, content, grade?, issue?, evidence?, rebut?, novel?, delta?, scoreAfter? }] }`. 발언이 모두 끝났으면 stage=CLOSING이고 cardNo·exchangeNo가 빠진다.
 - **재판 이탈 정책(팀 합의):** 판결 전에 어떤 방식으로든 재판 화면을 벗어나면(나가기 버튼, 앱 안 다른 화면 이동, 뒤로 가기, 새로고침, 탭 닫기) 그 판은 끝난 것으로 본다. 서버 메모리에 판이 남아 있더라도 다시 접근하지 않으며, 기록도 저장되지 않는다.
   - 진행 중 판의 trialId·발언·카드·경과는 재판 화면의 메모리 상태로만 둔다. sessionStorage·localStorage·URL에 보관해 되살리지 않는다.
   - 새로고침 등으로 재판 화면에 다시 들어오면 진행 상태가 없으므로 "재판이 종료되어 이어갈 수 없음"을 알리고 준비 화면(같은 사건)으로 안내한다. `GET /api/trials/{trialId}`로 이전 판을 되살리지 않는다.
@@ -316,7 +316,7 @@ FE/
 |---|---|---|---|
 | 게이지(score·scoreAfter)·변화량(delta) | 공개 | 공개 | 비공개 |
 | 판정 4항목·등급(grade) | 공개 | 비공개 | 비공개 |
-| 내 쪽 근거 카드(시작 응답 cards) | 공개 | 비공개 | 비공개 |
+| 현재 공방 카드(stage·상태 응답 card) | 현재 1장 공개 | 비공개 | 비공개 |
 | 사건 경과(시작 응답 progress) | 비공개 | 공개 | 비공개 |
 
 비공개 필드는 키가 빠지거나 빈 객체로 온다. 누락·null·`{}`를 정상 처리하고, 숨긴 필드를 0이나 false로 채워 표시하지 않는다. 이전 판·모드의 데이터가 남아 노출되지 않게 상태를 초기화한다.
@@ -337,12 +337,13 @@ FE/
 | judge | `{ checks?, grade?, delta?, scoreAfter? }` | 내 발언 판정. IRON은 `{}` |
 | opponent_delta | `{ text }` | 상대 말풍선에 누적 |
 | opponent_judge | judge와 같은 모양 | 상대 발언 판정 |
-| stage | `{ stage, cardNo?, exchangeNo? }` | 단계·카드가 바뀔 때만 옴 |
+| stage | `{ stage, cardNo?, exchangeNo?, topic?, card? }` | 단계·카드가 바뀔 때만 옴 |
 | turn_done | `{ nextTurn: "USER" \| "VERDICT" }` | 턴 확정 |
 | error | `{ status, code, message, retryable, failCount }` | 실패로 스트림 종료 |
 
 - 기본 순서: judge → opponent_delta 여러 번 → opponent_judge → (단계·카드가 바뀌면) stage → turn_done. 내 발언이 마지막이면 상대 이벤트 없이 judge → turn_done(VERDICT)이다.
 - checks는 `{ issue, evidence, rebut, novel }`이며 rebut=null(모두 진술, 각 카드 첫 검사 공격)은 판정 제외로 표시한다. CHALLENGER는 delta·scoreAfter만 온다.
+- CHICKEN은 현재 card 한 장만 표시하며, card.side를 그대로 사용한다. 시작 cards나 카드 번호로 전체 목록·현재 카드를 추측하지 않는다. stage로 임시 변경한 카드·단계·구분선은 실패·끊김 시 전송 전 상태로 복원한다.
 - stage 이벤트는 카드 안 공방 번호(exchangeNo)가 바뀔 때마다 오지 않는다. 시안이 공방 번호를 표시하면 turn_done 뒤 상태 API로 맞추고, 프론트에서 턴 규칙으로 계산하지 않는다.
 - turn_done의 nextTurn=USER에서만 다음 입력을 열고, VERDICT에서 판결 요청을 허용한다. 받은 글자 수로 종료를 판단하지 않는다.
 - 서버는 turn_done 때만 그 턴을 반영한다. error나 연결 끊김이면 그 발언 전체(내 발언·상대 발언·판정)가 반영되지 않는다. 화면도 임시 턴 상태를 버리고 마지막 확정 상태로 되돌리며 입력 원문을 보존한다. 같은 발언을 다시 보내면 된다.
