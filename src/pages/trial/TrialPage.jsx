@@ -539,10 +539,18 @@ function TrialRoom({ handoff, workId, caseId }) {
                     onChange={(e) => setDraft(e.target.value)}
                     onKeyDown={(e) => {
                       // 한글 조합 확정 Enter는 전송하지 않는다.
-                      if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.nativeEvent.keyCode !== 229) {
-                        e.preventDefault();
-                        if (!e.repeat) send();
+                      if (e.key !== 'Enter' || e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
+                      if (e.shiftKey) return; // Shift+Enter: 기본 줄바꿈
+                      e.preventDefault();
+                      if (e.ctrlKey || e.metaKey) {
+                        // Ctrl+Enter: 기본 동작이 없어 커서 위치에 직접 줄바꿈을 넣는다.
+                        const el = e.currentTarget;
+                        const { selectionStart: start, selectionEnd: end } = el;
+                        setDraft(el.value.slice(0, start) + '\n' + el.value.slice(end));
+                        requestAnimationFrame(() => el.setSelectionRange(start + 1, start + 1));
+                        return;
                       }
+                      if (!e.repeat) send();
                     }}
                     aria-invalid={!!inputError || undefined}
                     aria-describedby={inputError ? 'speech-error' : undefined}
