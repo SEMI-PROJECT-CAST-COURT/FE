@@ -26,6 +26,11 @@ export function fromJudgeEvent(data) {
   return judge;
 }
 
+// 서버가 단계별로 정한 내 쪽 카드(모두 진술: 첫 공방 · 공방: 현재 · 최후 변론: 마지막 공방)
+function visibleCard(state, data) {
+  return state.mode === 'CHICKEN' && data.card?.side === state.role ? data.card : null;
+}
+
 export function initialState(handoff) {
   const { start, role, mode } = handoff;
   const speakings = [];
@@ -38,7 +43,8 @@ export function initialState(handoff) {
     liveTrialId: start.trialId,
     role,
     mode,
-    cards: Array.isArray(start.cards) ? start.cards : null,
+    card: null, // 시작 응답의 전체 카드 목록은 사용하지 않는다.
+    topic: null,
     progress: typeof start.progress === 'string' ? start.progress : null,
     speakings,
     temp: null,
@@ -56,7 +62,8 @@ export function initialState(handoff) {
 export function reducer(state, action) {
   switch (action.type) {
     case 'send':
-      return { ...state, phase: 'sending', fail: null, temp: { mySeq: state.speakings.length + 1, mine: { content: action.content, judge: null }, opp: null } };
+      return { ...state, phase: 'sending', fail: null, temp: { mySeq: state.speakings.length + 1, mine: { content: action.content, judge: null }, opp: null,
+        before: { card: state.card, topic: state.topic, stageInfo: state.stageInfo, marks: state.marks, maxCard: state.maxCard } } };
     case 'judge': {
       if (!state.temp) return state;
       const judge = fromJudgeEvent(action.data);
@@ -82,8 +89,10 @@ export function reducer(state, action) {
       const cardNo = typeof data.cardNo === 'number' ? data.cardNo : null;
       return {
         ...state,
+        card: visibleCard(state, data),
+        topic: data.stage === 'CARD' ? data.topic ?? null : null,
         stageInfo: { stage: data.stage, cardNo, exchangeNo: typeof data.exchangeNo === 'number' ? data.exchangeNo : null },
-        marks: { ...state.marks, [markSeq]: { stage: data.stage, cardNo } },
+        marks: { ...state.marks, [markSeq]: { stage: data.stage, cardNo, topic: data.topic ?? null } },
         maxCard: Math.max(state.maxCard, cardNo ?? 0),
       };
     }
@@ -96,6 +105,8 @@ export function reducer(state, action) {
         speakings,
         temp: null,
         score: typeof st.score === 'number' ? st.score : state.score,
+        card: visibleCard(state, st),
+        topic: st.stage === 'CARD' ? st.topic ?? null : null,
         stageInfo: { stage: st.stage, cardNo, exchangeNo: typeof st.exchangeNo === 'number' ? st.exchangeNo : null },
         maxCard: Math.max(state.maxCard, cardNo ?? 0),
         phase: action.nextPhase ?? state.phase,
@@ -112,7 +123,10 @@ export function reducer(state, action) {
     }
     case 'discard':
       // 반영되지 않은 턴: 임시 상태를 버리고 마지막 확정 상태로. 게이지도 확정 발언 기준으로 되돌린다.
-      return { ...state, temp: null, phase: 'idle', fail: action.fail ?? null, score: lastScore(state) };
+      return { ...state, ...state.temp?.before, temp: null, phase: 'idle', fail: action.fail ?? null, score: lastScore(state) };
+    case 'card':
+      // 검사 시작: 상태 조회로 첫 공방 카드만 받는다(발언 · 단계는 바꾸지 않음)
+      return { ...state, card: visibleCard(state, action.status) };
     case 'phase':
       return { ...state, phase: action.phase };
     case 'verdictStart':

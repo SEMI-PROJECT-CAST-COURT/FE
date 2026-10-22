@@ -19,6 +19,8 @@ import { initialState, isFinishedStatus, reducer } from './trialState';
 import styles from './TrialPage.module.css';
 
 const MAX_CONTENT = 300; // Java length
+// 겁쟁이 모드 카드 패널: 단계마다 어느 공방의 카드인지 표시
+const CARD_PANEL_TAG = { OPENING: '첫 공방 카드', CARD: '현재 공방', CLOSING: '마지막 공방 카드' };
 
 function stageLabel(info, phase) {
   if (phase === 'verdict' || phase === 'verdicting' || phase === 'ready-verdict') return phase === 'ready-verdict' ? '최후 변론 종료' : '판결';
@@ -34,8 +36,9 @@ function stageLabel(info, phase) {
 function separatorText(mark, maxCard) {
   if (mark.stage === 'OPENING') return ['모두 진술', '검사 → 변호인 1번씩'];
   if (mark.stage === 'CLOSING') return ['최후 변론', maxCard >= 3 ? '3장 공방 후 진행 · 검사 → 변호인' : '2장 공방 후 게이지 47~53이 아니라 3번째 카드 없이 진행'];
-  if (mark.cardNo === 3) return ['공방 · 3번째 카드', '2장 공방 후 게이지 47~53 · 공격과 반론 3번씩'];
-  return [`공방 · ${mark.cardNo ?? ''}번째 카드`, '검사 근거 카드 중 무작위 1장 · 공격과 반론 3번씩'];
+  const title = mark.topic ? `논점 ${mark.cardNo ?? ''} : ${mark.topic}` : `논점 ${mark.cardNo ?? ''}`;
+  if (mark.cardNo === 3) return [title, '논점 2개 후 게이지 47~53 · 공격과 반론 3번씩'];
+  return [title, '공격과 반론 3번씩'];
 }
 
 export default function TrialPage() {
@@ -117,6 +120,10 @@ function TrialRoom({ handoff, workId, caseId }) {
   // 변호인 시작: 서버가 만든 검사 모두 진술의 판정 · 게이지를 상태 조회로 맞춘다(AI 재호출 없음)
   useEffect(() => {
     if (handoff.start.openingSpeaking) syncStatus('idle').catch(() => {});
+    // 겁쟁이 검사 시작: 모두 진술 중에도 첫 공방 카드를 보여 주기 위해 카드만 받아 온다
+    else if (handoff.mode === 'CHICKEN') {
+      fetchTrialStatus(handoff.start.trialId).then((status) => dispatch({ type: 'card', status })).catch(() => {});
+    }
   }, [handoff, syncStatus]);
 
   // 새로고침 · 탭 닫기: 경고 후 실제로 떠날 때 최선 노력으로 나가기 요청
@@ -187,7 +194,7 @@ function TrialRoom({ handoff, workId, caseId }) {
 
   const send = async () => {
     const s = stateRef.current;
-    if (s.phase !== 'idle') return; // 중복 제출 방지
+    if (s.phase !== 'idle' || abortRef.current || s.fail?.retryable === false) return; // 중복 제출 방지
     if (isBlank(draft) || javaLength(draft) > MAX_CONTENT) {
       setInputError('발언은 1자 이상 300자 이하로 입력해 주세요.');
       return;
@@ -231,7 +238,7 @@ function TrialRoom({ handoff, workId, caseId }) {
       }
       if (result.error) {
         dispatch({ type: 'discard', fail: result.error });
-        setDraft(content); // 입력 원문 보존 · 같은 발언을 다시 보내면 된다
+        setDraft((current) => current || content); // 대기 중 새로 쓴 발언은 덮어쓰지 않는다.
         setAnnounce('발언이 반영되지 않음');
         return;
       }
@@ -245,7 +252,7 @@ function TrialRoom({ handoff, workId, caseId }) {
       }
       if (err.businessCode === 'SPEAKING_NOT_YOUR_TURN') {
         dispatch({ type: 'discard', fail: err });
-        setDraft(content);
+        setDraft((current) => current || content);
         syncStatus().catch(() => {});
         return;
       }
@@ -254,7 +261,7 @@ function TrialRoom({ handoff, workId, caseId }) {
         return;
       }
       dispatch({ type: 'discard', fail: err });
-      setDraft(content);
+      setDraft((current) => current || content);
     } finally {
       if (abortRef.current === controller) abortRef.current = null;
     }
@@ -268,14 +275,14 @@ function TrialRoom({ handoff, workId, caseId }) {
         return;
       }
       dispatch({ type: 'discard', fail: { message: '연결이 끊겨 이번 발언은 반영되지 않았습니다. 같은 발언을 다시 보내 주세요.' } });
-      setDraft(content);
+      setDraft((current) => current || content);
     } catch (err) {
       if (err.status === 404 || err.status === 403) {
         dispatch({ type: 'ended', reason: 'gone' });
         return;
       }
       dispatch({ type: 'discard', fail: { message: '연결이 끊겨 서버 상태를 확인하지 못했습니다. 같은 발언을 다시 보내 주세요.' } });
-      setDraft(content);
+      setDraft((current) => current || content);
     }
   };
 
@@ -340,17 +347,6 @@ function TrialRoom({ handoff, workId, caseId }) {
     return { ...st, now, label: now ? '진행 중' : skipped ? '없음' : done ? '끝' : '' };
   });
 
-  const turnTitle = stageLabel(state.stageInfo, 'idle');
-  const turnSub =
-    role === 'DEFENSE'
-      ? state.stageInfo.stage === 'CLOSING'
-        ? '검사 최후 변론에 맞서 공방을 종합한 결론'
-        : 'AI 검사 발언에 반론'
-      : state.stageInfo.stage === 'OPENING'
-        ? '검사 모두 진술로 시작'
-        : state.stageInfo.stage === 'CLOSING'
-          ? '공방을 종합한 결론'
-          : '이번 카드로 공격';
   const working = phase === 'sending' || phase === 'syncing';
   const workTitle = state.temp?.opp ? `AI ${josa(ROLE_NAME[opp], '이', '가')} 발언하는 중` : state.temp?.mine?.judge ? `AI ${josa(ROLE_NAME[opp], '이', '가')} 발언을 준비하는 중` : phase === 'syncing' ? '재판 상태를 맞추는 중' : '판사가 내 발언을 판단하는 중';
 
@@ -483,7 +479,7 @@ function TrialRoom({ handoff, workId, caseId }) {
             </div>
           ) : null}
 
-          {myTurn ? (
+          {myTurn || working ? (
             <div className={styles.inputArea}>
               {fail ? (
                 <div className={styles.fail} role="alert">
@@ -504,10 +500,6 @@ function TrialRoom({ handoff, workId, caseId }) {
                   ) : null}
                 </div>
               ) : null}
-              <div className={styles.turn}>
-                <span className={styles.turnTitle}>{turnTitle}</span>
-                <span className={styles.turnSub}>{turnSub}</span>
-              </div>
               <form
                 className={styles.inputRow}
                 onSubmit={(e) => {
@@ -531,10 +523,19 @@ function TrialRoom({ handoff, workId, caseId }) {
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                        e.preventDefault();
-                        send();
+                      // 한글 조합 확정 Enter는 전송하지 않는다.
+                      if (e.key !== 'Enter' || e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
+                      if (e.shiftKey) return; // Shift+Enter: 기본 줄바꿈
+                      e.preventDefault();
+                      if (e.ctrlKey || e.metaKey) {
+                        // Ctrl+Enter: 기본 동작이 없어 커서 위치에 직접 줄바꿈을 넣는다.
+                        const el = e.currentTarget;
+                        const { selectionStart: start, selectionEnd: end } = el;
+                        setDraft(el.value.slice(0, start) + '\n' + el.value.slice(end));
+                        requestAnimationFrame(() => el.setSelectionRange(start + 1, start + 1));
+                        return;
                       }
+                      if (!e.repeat) send();
                     }}
                     aria-invalid={!!inputError || undefined}
                     aria-describedby={inputError ? 'speech-error' : undefined}
@@ -545,7 +546,7 @@ function TrialRoom({ handoff, workId, caseId }) {
                     </span>
                   ) : null}
                 </div>
-                <Button type="submit" size="xl" disabled={retryBlocked}>
+                <Button type="submit" size="xl" disabled={retryBlocked || working}>
                   {fail ? '다시 보내기' : '보내기'}
                 </Button>
               </form>
@@ -606,16 +607,25 @@ function TrialRoom({ handoff, workId, caseId }) {
             <div className={styles.ironPanel}>철인 모드 · 판사 게이지와 발언별 판정은 판결 때 공개</div>
           )}
 
-          {mode === 'CHICKEN' && state.cards ? (
+          {state.topic ? (
+            <div className={styles.panel}>
+              <h2 className={styles.h2}>현재 공방 논점</h2>
+              <p className={styles.progress}>{state.topic}</p>
+            </div>
+          ) : null}
+
+          {mode === 'CHICKEN' ? (
             <div className={styles.panel}>
               <div className={styles.panelHead}>
                 <h2 className={styles.h2}>내 쪽 근거 카드</h2>
-                <span className={styles.panelTag}>겁쟁이 모드</span>
+                <span className={styles.panelTag}>{CARD_PANEL_TAG[state.stageInfo.stage] ?? '겁쟁이 모드'}</span>
               </div>
-              {state.cards.length === 0 ? <span className={styles.workSub}>카드 없음</span> : null}
-              {state.cards.map((c) => (
-                <EvidenceCard key={c.cardId} side={role} title={c.title} body={c.body} weight={c.weight} />
-              ))}
+              {state.card ? (
+                <EvidenceCard side={state.card.side} title={state.card.title} body={state.card.body}
+                  weight={state.card.roundWeight} weightLabel="공방 가중치" />
+              ) : (
+                <p className={styles.workSub}>이 논점에 직접 대응하는 내 쪽 근거 카드가 없어.</p>
+              )}
             </div>
           ) : null}
 

@@ -230,26 +230,6 @@
   color: var(--text-1b);
 }
 
-.turn {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-6) var(--space-14);
-  align-items: center;
-  padding: var(--space-10) var(--space-14);
-  border-radius: var(--radius-lg);
-  background: var(--def-bg);
-  font-size: var(--fs-sm);
-}
-
-.turnTitle {
-  font-weight: var(--fw-bold);
-  color: var(--link);
-}
-
-.turnSub {
-  color: var(--text-1b);
-}
-
 .inputRow {
   display: flex;
   gap: var(--space-10);
