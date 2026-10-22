@@ -159,7 +159,7 @@ export default function MyRecordsPage() {
               {labels(distRole).map((label, i) => (
                 <div key={label} className={styles.barCol}>
                   <span className={styles.barN}>{counts[i]}</span>
-                  <div className={styles.bar} style={{ height: `${Math.max(4, Math.round((counts[i] / max) * 90))}px`, background: isWinName(label) ? 'var(--win-bar)' : 'var(--pro-line-2)' }} />
+                  <div className={styles.bar} style={{ height: `${Math.max(4, Math.round((counts[i] / max) * 90))}px`, background: isWinName(label) ? 'var(--win-bar)' : 'var(--pro-line-2)', animationDelay: `${i * 60}ms` }} />
                   <span className={styles.barLabel}>{label}</span>
                 </div>
               ))}

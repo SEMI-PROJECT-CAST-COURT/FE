@@ -661,7 +661,7 @@ function TrialRoom({ handoff, workId, caseId }) {
         }
       >
         <div className={styles.exitBody}>
-          지금 나가면 이번 재판은 <b>초기화</b>되고 기록되지 않음 · 진행 내용이 저장되지 않음 · 뒤로 가기·새로고침·탭 닫기도 같음 · 이 역할로 처음부터 다시 시작 가능
+          지금 나가시면 이번 재판은 <b>초기화</b>되며, 진행하신 내용은 저장되지 않습니다.
         </div>
       </Modal>
     </Page>

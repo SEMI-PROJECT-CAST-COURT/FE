@@ -182,7 +182,7 @@
   border-radius: 50%;
   border: 2px solid var(--line-2);
   border-top-color: var(--def);
-  animation: cc-spin 0.9s linear infinite;
+  animation: global(cc-spin) 0.9s linear infinite;
 }
 
 .section {

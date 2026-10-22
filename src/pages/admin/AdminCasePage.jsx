@@ -510,6 +510,7 @@ export default function AdminCasePage() {
                     </Button>
                   </div>
                 </div>
+                {cardSock.busy === `CARDS-${side}` ? <Loading label={`${name} 카드 초안을 만드는 중`} /> : null}
                 {list.map((c) => {
                   const err = cardErrs[c.key];
                   const show = touched || c.fromAi;
@@ -575,6 +576,7 @@ export default function AdminCasePage() {
 
           <section id="s5" className={styles.section}>
             <h2 className={styles.h2}>5. 형벌표</h2>
+            {penaltySock.busy === 'PENALTY' ? <Loading label="형벌표 초안을 만드는 중" /> : null}
             {penalties.map((p, i) => (
               <label key={p.tier} className={styles.penaltyRow}>
                 <span className={styles.penaltyTitle} style={{ color: tierColor(p.tier) }}>
