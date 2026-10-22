@@ -187,7 +187,7 @@ function TrialRoom({ handoff, workId, caseId }) {
 
   const send = async () => {
     const s = stateRef.current;
-    if (s.phase !== 'idle') return; // 중복 제출 방지
+    if (s.phase !== 'idle' || abortRef.current || s.fail?.retryable === false) return; // 중복 제출 방지
     if (isBlank(draft) || javaLength(draft) > MAX_CONTENT) {
       setInputError('발언은 1자 이상 300자 이하로 입력해 주세요.');
       return;
@@ -231,7 +231,7 @@ function TrialRoom({ handoff, workId, caseId }) {
       }
       if (result.error) {
         dispatch({ type: 'discard', fail: result.error });
-        setDraft(content); // 입력 원문 보존 · 같은 발언을 다시 보내면 된다
+        setDraft((current) => current || content); // 대기 중 새로 쓴 발언은 덮어쓰지 않는다.
         setAnnounce('발언이 반영되지 않음');
         return;
       }
@@ -245,7 +245,7 @@ function TrialRoom({ handoff, workId, caseId }) {
       }
       if (err.businessCode === 'SPEAKING_NOT_YOUR_TURN') {
         dispatch({ type: 'discard', fail: err });
-        setDraft(content);
+        setDraft((current) => current || content);
         syncStatus().catch(() => {});
         return;
       }
@@ -254,7 +254,7 @@ function TrialRoom({ handoff, workId, caseId }) {
         return;
       }
       dispatch({ type: 'discard', fail: err });
-      setDraft(content);
+      setDraft((current) => current || content);
     } finally {
       if (abortRef.current === controller) abortRef.current = null;
     }
@@ -268,14 +268,14 @@ function TrialRoom({ handoff, workId, caseId }) {
         return;
       }
       dispatch({ type: 'discard', fail: { message: '연결이 끊겨 이번 발언은 반영되지 않았습니다. 같은 발언을 다시 보내 주세요.' } });
-      setDraft(content);
+      setDraft((current) => current || content);
     } catch (err) {
       if (err.status === 404 || err.status === 403) {
         dispatch({ type: 'ended', reason: 'gone' });
         return;
       }
       dispatch({ type: 'discard', fail: { message: '연결이 끊겨 서버 상태를 확인하지 못했습니다. 같은 발언을 다시 보내 주세요.' } });
-      setDraft(content);
+      setDraft((current) => current || content);
     }
   };
 
@@ -483,7 +483,7 @@ function TrialRoom({ handoff, workId, caseId }) {
             </div>
           ) : null}
 
-          {myTurn ? (
+          {myTurn || working ? (
             <div className={styles.inputArea}>
               {fail ? (
                 <div className={styles.fail} role="alert">
@@ -531,9 +531,10 @@ function TrialRoom({ handoff, workId, caseId }) {
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                      // 한글 조합 확정 Enter는 전송하지 않는다.
+                      if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.nativeEvent.keyCode !== 229) {
                         e.preventDefault();
-                        send();
+                        if (!e.repeat) send();
                       }
                     }}
                     aria-invalid={!!inputError || undefined}
@@ -545,7 +546,7 @@ function TrialRoom({ handoff, workId, caseId }) {
                     </span>
                   ) : null}
                 </div>
-                <Button type="submit" size="xl" disabled={retryBlocked}>
+                <Button type="submit" size="xl" disabled={retryBlocked || working}>
                   {fail ? '다시 보내기' : '보내기'}
                 </Button>
               </form>
