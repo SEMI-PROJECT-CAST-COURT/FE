@@ -1,0 +1,114 @@
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-10);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.rowMain {
+  display: flex;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.handle {
+  color: var(--text-4);
+}
+
+.dragBtn {
+  display: inline-flex;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-4);
+  cursor: grab;
+}
+
+.nameInput {
+  flex: 1;
+  min-width: 0;
+  height: var(--h-sm);
+  padding: 0 var(--space-10);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-md);
+}
+
+.fixedName {
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--space-10);
+  font-size: var(--fs-md);
+  color: var(--text-1b);
+}
+
+.count {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.delete {
+  height: 32px;
+  padding: 0 var(--space-10);
+  border: 1px solid var(--danger-line);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--danger);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.delete:disabled {
+  opacity: var(--opacity-disabled);
+}
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+  color: var(--danger-strong);
+}
+
+.confirmBtns {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.addRow {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.addInput {
+  flex: 1;
+  min-width: 0;
+  height: var(--h-lg);
+  padding: 0 var(--space-12);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: var(--fs-md);
+}
+

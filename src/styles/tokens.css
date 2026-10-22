@@ -1,0 +1,73 @@
+/* CAST COURT design tokens — CAST COURT 화면 시안에서 추출 */
+/* 테마: <html data-theme="light|dark" data-contrast="high"> · localStorage cc-theme / cc-contrast */
+:root {
+  /* primitives (테마 공통) */
+  --font-sans: 'IBM Plex Sans KR', sans-serif;
+  --font-mono: monospace;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700; --fw-extrabold: 800;
+  --fs-2xs: 11px; --fs-xs: 12px; --fs-sm: 13px; --fs-md: 14px; --fs-lg: 15px; --fs-xl: 16px; --fs-2xl: 18px; --fs-3xl: 20px; --fs-4xl: 22px; --fs-5xl: 26px; --fs-6xl: 30px; --fs-7xl: 34px;
+  --lh-tight: 1.3; --lh-snug: 1.4; --lh-normal: 1.5; --lh-relaxed: 1.6; --lh-loose: 1.7;
+  --ls-logo: -0.02em;
+  --space-2: 2px; --space-4: 4px; --space-6: 6px; --space-8: 8px; --space-10: 10px; --space-12: 12px; --space-14: 14px; --space-16: 16px; --space-18: 18px; --space-20: 20px; --space-22: 22px; --space-24: 24px; --space-28: 28px; --space-32: 32px; --space-40: 40px; --space-48: 48px; --space-56: 56px;
+  --radius-2xs: 3px; --radius-xs: 4px; --radius-sm: 6px; --radius-gauge: 7px; --radius-md: 8px; --radius-lg: 10px; --radius-xl: 12px; --radius-2xl: 14px; --radius-3xl: 16px; --radius-pill: 20px;
+  --h-xs: 28px; --h-sm: 34px; --h-md: 36px; --h-lg: 40px; --h-default: 42px; --h-xl: 44px; --h-2xl: 46px; --h-cta: 48px;
+  --icon-sm: 14px; --icon-md: 16px; --icon-lg: 20px; --icon-logo-header: 26px;
+  --header-h: 65px; --footer-h: 64px; --container: 1200px; --grid-card-min: 260px;
+  --opacity-disabled: 0.45; --ease-gauge: cubic-bezier(0.2, 0.8, 0.2, 1); --dur-gauge: 1.2s;
+  --primary: #2f6fe0; --on-primary: #ffffff;
+  --gauge-track: linear-gradient(90deg, var(--def-bg-2) 0%, var(--surface-4) 50%, var(--pro-bg) 100%);
+  --gauge-fill: linear-gradient(90deg, var(--def-grad) 0%, var(--line-2) 50%, var(--pro-grad) 100%);
+  /* colors · dark (기본) */
+  --bg: #121214; --surface: #1e1f23; --surface-2: #17181b; --surface-3: #26272d; --surface-4: #2a2b31;  /* 바탕·면 */
+  --line: #2e2f35; --line-2: #3a3c44; --line-3: #45474f; --line-4: #4a4c55; --mute: #5a5c66;  /* 선 */
+  --text: #ececee; --text-1b: #c4c6cd; --text-2b: #b9bbc3; --text-2: #a3a5ae; --text-3: #8b8d97; --text-4: #6b6d77;  /* 글자 */
+  --def: #7fb0ff; --pro: #f0a066; --win: #7fd1a8; --danger: #f08a8a; --admin: #f2b46d; --link: #a9c9ff; --link-hover: #d3e3ff; --danger-strong: #f6b3b3; --danger-text: #c4a3a3;  /* 역할·상태 */
+  --def-bg: #1f2a3d; --def-bg-2: #1f3558; --def-bg-3: #171d28; --def-line: #2b3a55; --def-line-2: #3b5b8f; --mine-bubble: #24406f; --def-grad: #2f5fa8;  /* 변호인 계열 */
+  --pro-bg: #4a321d; --pro-line: #4a3825; --pro-line-2: #8a5a35; --pro-grad: #a8642f;  /* 검사 계열 */
+  --admin-bg: #2a2116; --admin-line: #5a4425;  /* 관리자 계열 */
+  --win-bg: #16241c; --win-line: #24432f; --win-bar: #2f7a55;  /* 성공 계열 */
+  --danger-bg: #2a1a1c; --danger-line: #5a3a3c; --danger-line-2: #7a3a3a; --danger-btn: #a33a3a; --danger-border: #c25454;  /* 위험 계열 */
+  --overlay: rgba(8, 8, 10, 0.72);  /* 기타 */
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  /* colors · light */
+  --bg: #f6f5f2; --surface: #ffffff; --surface-2: #efede8; --surface-3: #e7e5e0; --surface-4: #e2e0da;  /* 바탕·면 */
+  --line: #dedcd6; --line-2: #cfccc5; --line-3: #bdbab3; --line-4: #b5b2ab; --mute: #a09d97;  /* 선 */
+  --text: #1c1d21; --text-1b: #3b3a37; --text-2b: #4d4b47; --text-2: #5c5a56; --text-3: #6f6d68; --text-4: #8c8983;  /* 글자 */
+  --def: #2a62c9; --pro: #bf5d1a; --win: #1d8452; --danger: #c23b3b; --admin: #9c6110; --link: #2459b8; --link-hover: #173f8a; --danger-strong: #a42e2e; --danger-text: #8a4a4a;  /* 역할·상태 */
+  --def-bg: #e4ecfb; --def-bg-2: #d6e3fa; --def-bg-3: #eef3fb; --def-line: #bccff0; --def-line-2: #9db8e8; --mine-bubble: #dde7fb; --def-grad: #9db8e8;  /* 변호인 계열 */
+  --pro-bg: #f8e5d4; --pro-line: #e9cbb0; --pro-line-2: #d9a77d; --pro-grad: #e8b48a;  /* 검사 계열 */
+  --admin-bg: #f8ecd8; --admin-line: #e3c48f;  /* 관리자 계열 */
+  --win-bg: #e4f3ea; --win-line: #b4dcc5; --win-bar: #3d9e6d;  /* 성공 계열 */
+  --danger-bg: #f9e4e4; --danger-line: #e6b8b8; --danger-line-2: #d99a9a; --danger-btn: #c23b3b; --danger-border: #c25454;  /* 위험 계열 */
+  --overlay: rgba(30, 28, 24, 0.45);  /* 기타 */
+  color-scheme: light;
+}
+:root[data-contrast="high"] {
+  /* colors · dark-hc */
+  --bg: #000000; --surface: #0b0b0c; --surface-2: #000000; --surface-3: #1c1c1e; --surface-4: #2a2a2c;  /* 바탕·면 */
+  --line: #8a8a8f; --line-2: #a8a8ad; --line-3: #c4c4c8; --line-4: #c4c4c8; --mute: #c4c4c8;  /* 선 */
+  --text: #ffffff; --text-1b: #f7f7f8; --text-2b: #f3f3f5; --text-2: #ededf0; --text-3: #e2e2e6; --text-4: #cfcfd3;  /* 글자 */
+  --def: #a8cbff; --pro: #ffbb85; --win: #95f2c2; --danger: #ffa8a8; --admin: #ffd08a; --link: #c2dbff; --link-hover: #ffffff; --danger-strong: #ffcaca; --danger-text: #ffd6d6;  /* 역할·상태 */
+  --def-bg: #0b1d3d; --def-bg-2: #11305f; --def-bg-3: #06122a; --def-line: #7aa8ef; --def-line-2: #9cc0f5; --mine-bubble: #153a75; --def-grad: #3a78e0;  /* 변호인 계열 */
+  --pro-bg: #3d2410; --pro-line: #e0955c; --pro-line-2: #efab78; --pro-grad: #d97a2f;  /* 검사 계열 */
+  --admin-bg: #2b1f0a; --admin-line: #e6b067;  /* 관리자 계열 */
+  --win-bg: #05211a; --win-line: #58c994; --win-bar: #46c486;  /* 성공 계열 */
+  --danger-bg: #2d0a0a; --danger-line: #e67a7a; --danger-line-2: #ff9090; --danger-btn: #c42b2b; --danger-border: #ff7070;  /* 위험 계열 */
+  --overlay: rgba(0, 0, 0, 0.85);  /* 기타 */
+}
+:root[data-theme="light"][data-contrast="high"] {
+  /* colors · light-hc */
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #f0f0f0; --surface-3: #dedede; --surface-4: #cfcfcf;  /* 바탕·면 */
+  --line: #5c5c5c; --line-2: #444444; --line-3: #2e2e2e; --line-4: #2e2e2e; --mute: #4d4d4d;  /* 선 */
+  --text: #000000; --text-1b: #101010; --text-2b: #181818; --text-2: #222222; --text-3: #303030; --text-4: #474747;  /* 글자 */
+  --def: #0a46a8; --pro: #8a3a00; --win: #005c2d; --danger: #a10000; --admin: #663d00; --link: #003b9c; --link-hover: #002766; --danger-strong: #780000; --danger-text: #660000;  /* 역할·상태 */
+  --def-bg: #dbe7ff; --def-bg-2: #c6d9ff; --def-bg-3: #edf3ff; --def-line: #0a46a8; --def-line-2: #0a46a8; --mine-bubble: #d0e1ff; --def-grad: #5f8fe0;  /* 변호인 계열 */
+  --pro-bg: #ffe1c9; --pro-line: #8a3a00; --pro-line-2: #8a3a00; --pro-grad: #d08040;  /* 검사 계열 */
+  --admin-bg: #ffefd3; --admin-line: #663d00;  /* 관리자 계열 */
+  --win-bg: #d9f4e5; --win-line: #005c2d; --win-bar: #005c2d;  /* 성공 계열 */
+  --danger-bg: #ffdede; --danger-line: #a10000; --danger-line-2: #a10000; --danger-btn: #a10000; --danger-border: #a10000;  /* 위험 계열 */
+  --overlay: rgba(0, 0, 0, 0.6);  /* 기타 */
+}
+:root[data-theme="light"][data-contrast="high"] { color-scheme: light; }
