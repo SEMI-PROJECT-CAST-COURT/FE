@@ -12,7 +12,7 @@ import { createWork, draftWorkSummary, fetchWork, updateWork } from '../../api/w
 import { codePointLength, isBlank, strip, todayIso } from '../../lib/text';
 import styles from './AdminWorkPage.module.css';
 
-const POSTER_MAX = 100 * 1024; // 서버 PosterStorage · MultipartConfig 기준
+const POSTER_MAX = 500 * 1024; // 서버 PosterStorage · MultipartConfig 기준
 const POSTER_TYPES = ['image/jpeg', 'image/png'];
 const TEXT_MAX = 100; // 제목 · 원작자 · 소개 모두 codePoint 100자
 
@@ -78,7 +78,7 @@ export default function AdminWorkPage() {
       return;
     }
     if (file.size > POSTER_MAX) {
-      setPosterError(`포스터는 100KB 이하여야 합니다. (선택한 파일 ${Math.ceil(file.size / 1024)}KB)`);
+      setPosterError(`포스터는 ${POSTER_MAX / 1024}KB 이하여야 합니다. (선택한 파일 ${Math.ceil(file.size / 1024)}KB)`);
       return;
     }
     setPosterError(null);

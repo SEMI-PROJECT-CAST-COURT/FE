@@ -30,7 +30,7 @@
 
 - 같은 프로젝트의 갱신된 시안 아티팩트를 받으면 그 버전을 따른다. 접근하지 못한 화면을 확인했다고 주장하지 않는다.
 - 별도 로컬 명세서나 화면 이미지 복사본은 필수 자료가 아니다. 기능은 백엔드 코드, 화면은 아티팩트를 직접 확인한다.
-- 아래 API·검증 내용은 **2026-10-21 BE `develop` 브랜치(관리자 목록 id·authority 추가, SUPER_ADMIN 비활성화 차단 PR #37·#38 반영) 소스 확인 시점**의 스냅샷이다. 구현 시작 때 다시 읽어 갱신한다.
+- 아래 API·검증 내용은 **2026-10-22 BE `develop` 브랜치(관리자 목록 id·authority 추가, SUPER_ADMIN 비활성화 차단 PR #37·#38, 근거 카드 내용 100자 PR #40, 포스터 500KB PR #41 반영) 소스 확인 시점**의 스냅샷이다. 구현 시작 때 다시 읽어 갱신한다.
 
 # 1층. 화면 규칙
 
@@ -259,7 +259,7 @@ FE/
 - 등록/수정은 FormData: `data`는 `new Blob([JSON.stringify(body)], { type: 'application/json' })`, `poster`는 파일. multipart Content-Type/boundary를 손으로 지정하지 않는다.
 - 필드 `{ categoryId, title, author, releasedOn(YYYY-MM-DD), summary }`. title·author 필수 1~100자(strip 후), releasedOn 필수, summary는 선택이며 최대 100자. 존재하지 않는 categoryId는 400 `WORK_INPUT_INVALID`. 제목 중복 409 `WORK_TITLE_ALREADY_EXISTS`.
 - 포스터는 선택이다. 등록 때 없으면 서버가 기본 이미지(`/images/default-poster.svg`)를 넣고, 수정 때 없으면 기존 이미지를 유지한다. 기존 포스터를 지우고 기본 이미지로 되돌리는 요청은 없다.
-- 포스터는 JPG/PNG, **100KB(100 × 1024바이트) 이하**이며 요청 전체는 1MB 이하이다. 초과 400 `POSTER_TOO_LARGE`, 형식 오류 400 `POSTER_INVALID_FORMAT`. 업로드 전에 같은 기준으로 미리 검사한다.
+- 포스터는 JPG/PNG, **500KB(500 × 1024바이트) 이하**이며 요청 전체는 1MB 이하이다. 초과 400 `POSTER_TOO_LARGE`, 형식 오류 400 `POSTER_INVALID_FORMAT`. 업로드 전에 같은 기준으로 미리 검사한다.
 - 삭제는 소프트 삭제이며 그 작품의 사건도 함께 숨겨진다. 이미 끝난 재판 기록은 남는다.
 - 소개 초안 `{ title, author }`(각 1~100자) → `{ summary }`(100자 이내). 입력 오류 400 `WORK_DRAFT_INPUT_INVALID`, AI 실패 502 `AI_UPSTREAM_ERROR`. 실패하면 사용자가 적은 값을 지우지 않는다. 결과는 summary 입력의 초안일 뿐 저장이 아니다.
 
