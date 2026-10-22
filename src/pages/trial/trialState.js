@@ -26,6 +26,10 @@ export function fromJudgeEvent(data) {
   return judge;
 }
 
+function visibleCard(state, data) {
+  return state.mode === 'CHICKEN' && data.stage === 'CARD' && data.card?.side === state.role ? data.card : null;
+}
+
 export function initialState(handoff) {
   const { start, role, mode } = handoff;
   const speakings = [];
@@ -39,6 +43,7 @@ export function initialState(handoff) {
     role,
     mode,
     card: null, // 시작 응답의 전체 카드 목록은 사용하지 않는다.
+    topic: null,
     progress: typeof start.progress === 'string' ? start.progress : null,
     speakings,
     temp: null,
@@ -57,7 +62,7 @@ export function reducer(state, action) {
   switch (action.type) {
     case 'send':
       return { ...state, phase: 'sending', fail: null, temp: { mySeq: state.speakings.length + 1, mine: { content: action.content, judge: null }, opp: null,
-        before: { card: state.card, stageInfo: state.stageInfo, marks: state.marks, maxCard: state.maxCard } } };
+        before: { card: state.card, topic: state.topic, stageInfo: state.stageInfo, marks: state.marks, maxCard: state.maxCard } } };
     case 'judge': {
       if (!state.temp) return state;
       const judge = fromJudgeEvent(action.data);
@@ -83,7 +88,8 @@ export function reducer(state, action) {
       const cardNo = typeof data.cardNo === 'number' ? data.cardNo : null;
       return {
         ...state,
-        card: state.mode === 'CHICKEN' && data.stage === 'CARD' ? data.card ?? null : null,
+        card: visibleCard(state, data),
+        topic: data.stage === 'CARD' ? data.topic ?? null : null,
         stageInfo: { stage: data.stage, cardNo, exchangeNo: typeof data.exchangeNo === 'number' ? data.exchangeNo : null },
         marks: { ...state.marks, [markSeq]: { stage: data.stage, cardNo } },
         maxCard: Math.max(state.maxCard, cardNo ?? 0),
@@ -98,7 +104,8 @@ export function reducer(state, action) {
         speakings,
         temp: null,
         score: typeof st.score === 'number' ? st.score : state.score,
-        card: state.mode === 'CHICKEN' && st.stage === 'CARD' ? st.card ?? null : null,
+        card: visibleCard(state, st),
+        topic: st.stage === 'CARD' ? st.topic ?? null : null,
         stageInfo: { stage: st.stage, cardNo, exchangeNo: typeof st.exchangeNo === 'number' ? st.exchangeNo : null },
         maxCard: Math.max(state.maxCard, cardNo ?? 0),
         phase: action.nextPhase ?? state.phase,
