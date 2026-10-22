@@ -144,15 +144,12 @@ function TrialRoom({ handoff, workId, caseId }) {
     };
   }, [active]);
 
-  // 화면을 떠나면 스트림을 끊는다(서버는 그 턴을 반영하지 않음). 진행 중이었다면 나가기 요청도 보낸다.
+  // 화면을 떠나면 스트림만 끊는다(서버는 그 턴을 반영하지 않음).
+  // 나가기 요청은 확인 팝업 · pagehide 에서만 보낸다. 여기서 보내면 개발 중 코드 수정(Fast Refresh)이 effect 를 다시 실행할 때 진행 중 판이 지워진다.
   useEffect(
     () => () => {
       abortRef.current?.abort();
-      const s = stateRef.current;
-      if (!leavingRef.current && s.phase !== 'verdict' && s.phase !== 'ended') {
-        exitTrial(s.liveTrialId).catch(() => {});
-      }
-      clearTrialHandoff(s.liveTrialId);
+      clearTrialHandoff(stateRef.current.liveTrialId);
     },
     [],
   );
