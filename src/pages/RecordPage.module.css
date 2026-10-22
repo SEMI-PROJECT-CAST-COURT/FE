@@ -139,6 +139,7 @@
 
 /* 재판 화면 대화 영역(600px)과 같은 높이에서 스크롤 */
 .talkScroll {
+  position: relative;
   max-height: 600px;
   overflow-y: auto;
   display: flex;
