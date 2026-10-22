@@ -347,17 +347,6 @@ function TrialRoom({ handoff, workId, caseId }) {
     return { ...st, now, label: now ? '진행 중' : skipped ? '없음' : done ? '끝' : '' };
   });
 
-  const turnTitle = stageLabel(state.stageInfo, 'idle');
-  const turnSub =
-    role === 'DEFENSE'
-      ? state.stageInfo.stage === 'CLOSING'
-        ? '검사 최후 변론에 맞서 공방을 종합한 결론'
-        : 'AI 검사 발언에 반론'
-      : state.stageInfo.stage === 'OPENING'
-        ? '검사 모두 진술로 시작'
-        : state.stageInfo.stage === 'CLOSING'
-          ? '공방을 종합한 결론'
-          : '이번 카드로 공격';
   const working = phase === 'sending' || phase === 'syncing';
   const workTitle = state.temp?.opp ? `AI ${josa(ROLE_NAME[opp], '이', '가')} 발언하는 중` : state.temp?.mine?.judge ? `AI ${josa(ROLE_NAME[opp], '이', '가')} 발언을 준비하는 중` : phase === 'syncing' ? '재판 상태를 맞추는 중' : '판사가 내 발언을 판단하는 중';
 
@@ -511,10 +500,6 @@ function TrialRoom({ handoff, workId, caseId }) {
                   ) : null}
                 </div>
               ) : null}
-              <div className={styles.turn}>
-                <span className={styles.turnTitle}>{turnTitle}</span>
-                <span className={styles.turnSub}>{turnSub}</span>
-              </div>
               <form
                 className={styles.inputRow}
                 onSubmit={(e) => {
