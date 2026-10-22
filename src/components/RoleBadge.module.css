@@ -1,0 +1,47 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: var(--space-4) var(--space-10);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+}
+
+.def {
+  background: var(--def-bg);
+  color: var(--def);
+}
+
+.pro {
+  background: var(--pro-bg);
+  color: var(--pro);
+}
+
+.judge,
+.neutral {
+  background: var(--surface-3);
+  color: var(--text-1b);
+}
+
+.win {
+  background: var(--win-bg);
+  color: var(--win);
+}
+
+.lose {
+  background: var(--pro-bg);
+  color: var(--pro);
+}
+
+.admin {
+  background: var(--admin-bg);
+  color: var(--admin);
+  border: 1px solid var(--admin-line);
+}
+
+.danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}

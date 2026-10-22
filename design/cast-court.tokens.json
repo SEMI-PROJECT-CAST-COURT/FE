@@ -1,0 +1,983 @@
+{
+  "$meta": {
+    "name": "CAST COURT",
+    "source": "CAST COURT 화면 시안 (Design canvas) — 20개 보드에서 추출",
+    "themeSwitch": {
+      "attribute": "html[data-theme=\"light\"|\"dark\"]",
+      "contrast": "html[data-contrast=\"high\"]",
+      "storage": {
+        "cc-theme": "system | light | dark",
+        "cc-contrast": "high | normal"
+      },
+      "default": "system (prefers-color-scheme)"
+    },
+    "modes": [
+      "dark",
+      "light",
+      "dark-hc",
+      "light-hc"
+    ],
+    "rule": "화면은 색을 직접 쓰지 않고 var(--토큰)만 사용. 예외: primary #2f6fe0, on-color #ffffff"
+  },
+  "color": {
+    "바탕·면": {
+      "bg": {
+        "$type": "color",
+        "$description": "페이지 바탕",
+        "var": "--bg",
+        "$value": {
+          "dark": "#121214",
+          "light": "#f6f5f2",
+          "dark-hc": "#000000",
+          "light-hc": "#ffffff"
+        }
+      },
+      "surface": {
+        "$type": "color",
+        "$description": "카드·패널",
+        "var": "--surface",
+        "$value": {
+          "dark": "#1e1f23",
+          "light": "#ffffff",
+          "dark-hc": "#0b0b0c",
+          "light-hc": "#ffffff"
+        }
+      },
+      "surface-2": {
+        "$type": "color",
+        "$description": "헤더·푸터·입력창",
+        "var": "--surface-2",
+        "$value": {
+          "dark": "#17181b",
+          "light": "#efede8",
+          "dark-hc": "#000000",
+          "light-hc": "#f0f0f0"
+        }
+      },
+      "surface-3": {
+        "$type": "color",
+        "$description": "선택된 탭·아바타",
+        "var": "--surface-3",
+        "$value": {
+          "dark": "#26272d",
+          "light": "#e7e5e0",
+          "dark-hc": "#1c1c1e",
+          "light-hc": "#dedede"
+        }
+      },
+      "surface-4": {
+        "$type": "color",
+        "$description": "게이지 트랙·이미지 자리",
+        "var": "--surface-4",
+        "$value": {
+          "dark": "#2a2b31",
+          "light": "#e2e0da",
+          "dark-hc": "#2a2a2c",
+          "light-hc": "#cfcfcf"
+        }
+      }
+    },
+    "선": {
+      "line": {
+        "$type": "color",
+        "$description": "기본 테두리",
+        "var": "--line",
+        "$value": {
+          "dark": "#2e2f35",
+          "light": "#dedcd6",
+          "dark-hc": "#8a8a8f",
+          "light-hc": "#5c5c5c"
+        }
+      },
+      "line-2": {
+        "$type": "color",
+        "$description": "입력 테두리",
+        "var": "--line-2",
+        "$value": {
+          "dark": "#3a3c44",
+          "light": "#cfccc5",
+          "dark-hc": "#a8a8ad",
+          "light-hc": "#444444"
+        }
+      },
+      "line-3": {
+        "$type": "color",
+        "$description": "보조 버튼 테두리",
+        "var": "--line-3",
+        "$value": {
+          "dark": "#45474f",
+          "light": "#bdbab3",
+          "dark-hc": "#c4c4c8",
+          "light-hc": "#2e2e2e"
+        }
+      },
+      "line-4": {
+        "$type": "color",
+        "$description": "점선 테두리(빈 자리·업로드 영역)",
+        "var": "--line-4",
+        "$value": {
+          "dark": "#4a4c55",
+          "light": "#b5b2ab",
+          "dark-hc": "#c4c4c8",
+          "light-hc": "#2e2e2e"
+        }
+      },
+      "mute": {
+        "$type": "color",
+        "$description": "게이지 중앙선·미선택 라디오 테두리",
+        "var": "--mute",
+        "$value": {
+          "dark": "#5a5c66",
+          "light": "#a09d97",
+          "dark-hc": "#c4c4c8",
+          "light-hc": "#4d4d4d"
+        }
+      }
+    },
+    "글자": {
+      "text": {
+        "$type": "color",
+        "$description": "본문",
+        "var": "--text",
+        "$value": {
+          "dark": "#ececee",
+          "light": "#1c1d21",
+          "dark-hc": "#ffffff",
+          "light-hc": "#000000"
+        }
+      },
+      "text-1b": {
+        "$type": "color",
+        "$description": "보조 본문",
+        "var": "--text-1b",
+        "$value": {
+          "dark": "#c4c6cd",
+          "light": "#3b3a37",
+          "dark-hc": "#f7f7f8",
+          "light-hc": "#101010"
+        }
+      },
+      "text-2b": {
+        "$type": "color",
+        "$description": "긴 설명 문단(줄거리·카드 본문)",
+        "var": "--text-2b",
+        "$value": {
+          "dark": "#b9bbc3",
+          "light": "#4d4b47",
+          "dark-hc": "#f3f3f5",
+          "light-hc": "#181818"
+        }
+      },
+      "text-2": {
+        "$type": "color",
+        "$description": "설명",
+        "var": "--text-2",
+        "$value": {
+          "dark": "#a3a5ae",
+          "light": "#5c5a56",
+          "dark-hc": "#ededf0",
+          "light-hc": "#222222"
+        }
+      },
+      "text-3": {
+        "$type": "color",
+        "$description": "라벨",
+        "var": "--text-3",
+        "$value": {
+          "dark": "#8b8d97",
+          "light": "#6f6d68",
+          "dark-hc": "#e2e2e6",
+          "light-hc": "#303030"
+        }
+      },
+      "text-4": {
+        "$type": "color",
+        "$description": "비활성",
+        "var": "--text-4",
+        "$value": {
+          "dark": "#6b6d77",
+          "light": "#8c8983",
+          "dark-hc": "#cfcfd3",
+          "light-hc": "#474747"
+        }
+      }
+    },
+    "역할·상태": {
+      "def": {
+        "$type": "color",
+        "$description": "변호인·무죄 쪽",
+        "var": "--def",
+        "$value": {
+          "dark": "#7fb0ff",
+          "light": "#2a62c9",
+          "dark-hc": "#a8cbff",
+          "light-hc": "#0a46a8"
+        }
+      },
+      "pro": {
+        "$type": "color",
+        "$description": "검사·유죄 쪽",
+        "var": "--pro",
+        "$value": {
+          "dark": "#f0a066",
+          "light": "#bf5d1a",
+          "dark-hc": "#ffbb85",
+          "light-hc": "#8a3a00"
+        }
+      },
+      "win": {
+        "$type": "color",
+        "$description": "승리·✓",
+        "var": "--win",
+        "$value": {
+          "dark": "#7fd1a8",
+          "light": "#1d8452",
+          "dark-hc": "#95f2c2",
+          "light-hc": "#005c2d"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$description": "패배·✗·삭제",
+        "var": "--danger",
+        "$value": {
+          "dark": "#f08a8a",
+          "light": "#c23b3b",
+          "dark-hc": "#ffa8a8",
+          "light-hc": "#a10000"
+        }
+      },
+      "admin": {
+        "$type": "color",
+        "$description": "관리자",
+        "var": "--admin",
+        "$value": {
+          "dark": "#f2b46d",
+          "light": "#9c6110",
+          "dark-hc": "#ffd08a",
+          "light-hc": "#663d00"
+        }
+      },
+      "link": {
+        "$type": "color",
+        "$description": "링크·현재 단계",
+        "var": "--link",
+        "$value": {
+          "dark": "#a9c9ff",
+          "light": "#2459b8",
+          "dark-hc": "#c2dbff",
+          "light-hc": "#003b9c"
+        }
+      },
+      "link-hover": {
+        "$type": "color",
+        "$description": "링크 hover",
+        "var": "--link-hover",
+        "$value": {
+          "dark": "#d3e3ff",
+          "light": "#173f8a",
+          "dark-hc": "#ffffff",
+          "light-hc": "#002766"
+        }
+      },
+      "danger-strong": {
+        "$type": "color",
+        "$description": "위험 제목·위험 텍스트 버튼",
+        "var": "--danger-strong",
+        "$value": {
+          "dark": "#f6b3b3",
+          "light": "#a42e2e",
+          "dark-hc": "#ffcaca",
+          "light-hc": "#780000"
+        }
+      },
+      "danger-text": {
+        "$type": "color",
+        "$description": "보조 오류 문구",
+        "var": "--danger-text",
+        "$value": {
+          "dark": "#c4a3a3",
+          "light": "#8a4a4a",
+          "dark-hc": "#ffd6d6",
+          "light-hc": "#660000"
+        }
+      }
+    },
+    "변호인 계열": {
+      "def-bg": {
+        "$type": "color",
+        "$description": "변호인 강조 바탕",
+        "var": "--def-bg",
+        "$value": {
+          "dark": "#1f2a3d",
+          "light": "#e4ecfb",
+          "dark-hc": "#0b1d3d",
+          "light-hc": "#dbe7ff"
+        }
+      },
+      "def-bg-2": {
+        "$type": "color",
+        "$description": "게이지 트랙 무죄 끝·변호인 배지 바탕",
+        "var": "--def-bg-2",
+        "$value": {
+          "dark": "#1f3558",
+          "light": "#d6e3fa",
+          "dark-hc": "#11305f",
+          "light-hc": "#c6d9ff"
+        }
+      },
+      "def-bg-3": {
+        "$type": "color",
+        "$description": "변호인 점선 영역 바탕",
+        "var": "--def-bg-3",
+        "$value": {
+          "dark": "#171d28",
+          "light": "#eef3fb",
+          "dark-hc": "#06122a",
+          "light-hc": "#edf3ff"
+        }
+      },
+      "def-line": {
+        "$type": "color",
+        "$description": "변호인 카드 테두리",
+        "var": "--def-line",
+        "$value": {
+          "dark": "#2b3a55",
+          "light": "#bccff0",
+          "dark-hc": "#7aa8ef",
+          "light-hc": "#0a46a8"
+        }
+      },
+      "def-line-2": {
+        "$type": "color",
+        "$description": "변호인 강조 테두리·현재 단계",
+        "var": "--def-line-2",
+        "$value": {
+          "dark": "#3b5b8f",
+          "light": "#9db8e8",
+          "dark-hc": "#9cc0f5",
+          "light-hc": "#0a46a8"
+        }
+      },
+      "mine-bubble": {
+        "$type": "color",
+        "$description": "내 발언 말풍선",
+        "var": "--mine-bubble",
+        "$value": {
+          "dark": "#24406f",
+          "light": "#dde7fb",
+          "dark-hc": "#153a75",
+          "light-hc": "#d0e1ff"
+        }
+      },
+      "def-grad": {
+        "$type": "color",
+        "$description": "게이지 채움 그라디언트 무죄 끝",
+        "var": "--def-grad",
+        "$value": {
+          "dark": "#2f5fa8",
+          "light": "#9db8e8",
+          "dark-hc": "#3a78e0",
+          "light-hc": "#5f8fe0"
+        }
+      }
+    },
+    "검사 계열": {
+      "pro-bg": {
+        "$type": "color",
+        "$description": "검사 강조 바탕",
+        "var": "--pro-bg",
+        "$value": {
+          "dark": "#4a321d",
+          "light": "#f8e5d4",
+          "dark-hc": "#3d2410",
+          "light-hc": "#ffe1c9"
+        }
+      },
+      "pro-line": {
+        "$type": "color",
+        "$description": "검사 카드 테두리",
+        "var": "--pro-line",
+        "$value": {
+          "dark": "#4a3825",
+          "light": "#e9cbb0",
+          "dark-hc": "#e0955c",
+          "light-hc": "#8a3a00"
+        }
+      },
+      "pro-line-2": {
+        "$type": "color",
+        "$description": "검사 강조 테두리·통계 막대(패)",
+        "var": "--pro-line-2",
+        "$value": {
+          "dark": "#8a5a35",
+          "light": "#d9a77d",
+          "dark-hc": "#efab78",
+          "light-hc": "#8a3a00"
+        }
+      },
+      "pro-grad": {
+        "$type": "color",
+        "$description": "게이지 채움 그라디언트 유죄 끝",
+        "var": "--pro-grad",
+        "$value": {
+          "dark": "#a8642f",
+          "light": "#e8b48a",
+          "dark-hc": "#d97a2f",
+          "light-hc": "#d08040"
+        }
+      }
+    },
+    "관리자 계열": {
+      "admin-bg": {
+        "$type": "color",
+        "$description": "관리자 강조 바탕",
+        "var": "--admin-bg",
+        "$value": {
+          "dark": "#2a2116",
+          "light": "#f8ecd8",
+          "dark-hc": "#2b1f0a",
+          "light-hc": "#ffefd3"
+        }
+      },
+      "admin-line": {
+        "$type": "color",
+        "$description": "관리자 테두리",
+        "var": "--admin-line",
+        "$value": {
+          "dark": "#5a4425",
+          "light": "#e3c48f",
+          "dark-hc": "#e6b067",
+          "light-hc": "#663d00"
+        }
+      }
+    },
+    "성공 계열": {
+      "win-bg": {
+        "$type": "color",
+        "$description": "성공 안내 바탕",
+        "var": "--win-bg",
+        "$value": {
+          "dark": "#16241c",
+          "light": "#e4f3ea",
+          "dark-hc": "#05211a",
+          "light-hc": "#d9f4e5"
+        }
+      },
+      "win-line": {
+        "$type": "color",
+        "$description": "성공 테두리·완료 배지 바탕",
+        "var": "--win-line",
+        "$value": {
+          "dark": "#24432f",
+          "light": "#b4dcc5",
+          "dark-hc": "#58c994",
+          "light-hc": "#005c2d"
+        }
+      },
+      "win-bar": {
+        "$type": "color",
+        "$description": "통계 막대(승)",
+        "var": "--win-bar",
+        "$value": {
+          "dark": "#2f7a55",
+          "light": "#3d9e6d",
+          "dark-hc": "#46c486",
+          "light-hc": "#005c2d"
+        }
+      }
+    },
+    "위험 계열": {
+      "danger-bg": {
+        "$type": "color",
+        "$description": "오류 안내 바탕",
+        "var": "--danger-bg",
+        "$value": {
+          "dark": "#2a1a1c",
+          "light": "#f9e4e4",
+          "dark-hc": "#2d0a0a",
+          "light-hc": "#ffdede"
+        }
+      },
+      "danger-line": {
+        "$type": "color",
+        "$description": "오류 테두리",
+        "var": "--danger-line",
+        "$value": {
+          "dark": "#5a3a3c",
+          "light": "#e6b8b8",
+          "dark-hc": "#e67a7a",
+          "light-hc": "#a10000"
+        }
+      },
+      "danger-line-2": {
+        "$type": "color",
+        "$description": "위험 팝업·경고 테두리",
+        "var": "--danger-line-2",
+        "$value": {
+          "dark": "#7a3a3a",
+          "light": "#d99a9a",
+          "dark-hc": "#ff9090",
+          "light-hc": "#a10000"
+        }
+      },
+      "danger-btn": {
+        "$type": "color",
+        "$description": "위험 버튼 바탕(글자 #ffffff)",
+        "var": "--danger-btn",
+        "$value": {
+          "dark": "#a33a3a",
+          "light": "#c23b3b",
+          "dark-hc": "#c42b2b",
+          "light-hc": "#a10000"
+        }
+      },
+      "danger-border": {
+        "$type": "color",
+        "$description": "위험 보조 버튼·오류 입력 테두리",
+        "var": "--danger-border",
+        "$value": {
+          "dark": "#c25454",
+          "light": "#c25454",
+          "dark-hc": "#ff7070",
+          "light-hc": "#a10000"
+        }
+      }
+    },
+    "기타": {
+      "overlay": {
+        "$type": "color",
+        "$description": "팝업 뒤 어둡게 가림",
+        "var": "--overlay",
+        "$value": {
+          "dark": "rgba(8, 8, 10, 0.72)",
+          "light": "rgba(30, 28, 24, 0.45)",
+          "dark-hc": "rgba(0, 0, 0, 0.85)",
+          "light-hc": "rgba(0, 0, 0, 0.6)"
+        }
+      }
+    }
+  },
+  "brand": {
+    "primary": {
+      "$type": "color",
+      "$value": "#2f6fe0",
+      "$description": "주요 버튼·선택 테두리(accent). 모든 테마 공통"
+    },
+    "on-primary": {
+      "$type": "color",
+      "$value": "#ffffff",
+      "$description": "primary·danger-btn 위 글자"
+    },
+    "accent-alternatives": {
+      "$type": "color",
+      "$value": [
+        "#2f6fe0",
+        "#7c5ce0",
+        "#c2410c"
+      ],
+      "$description": "시안 tweak 후보(기본 #2f6fe0). 구현 시 하나로 고정"
+    }
+  },
+  "gradient": {
+    "gauge-track": {
+      "$value": "linear-gradient(90deg, var(--def-bg-2) 0%, var(--surface-4) 50%, var(--pro-bg) 100%)",
+      "$description": "게이지 바탕 트랙"
+    },
+    "gauge-fill": {
+      "$value": "linear-gradient(90deg, var(--def-grad) 0%, var(--line-2) 50%, var(--pro-grad) 100%)",
+      "$description": "게이지 채움(결과 화면)"
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$value": "'IBM Plex Sans KR', sans-serif",
+        "$description": "전체 UI. Google Fonts wght 400;500;600;700;800"
+      },
+      "mono": {
+        "$value": "monospace",
+        "$description": "토큰명·API·DB 명세에서만"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": 400,
+        "$description": "본문 기본"
+      },
+      "medium": {
+        "$value": 500,
+        "$description": "로드만 됨 · 사실상 미사용"
+      },
+      "semibold": {
+        "$value": 600,
+        "$description": "버튼·라벨·강조 (71회)"
+      },
+      "bold": {
+        "$value": 700,
+        "$description": "제목·배지·로고 (90회)"
+      },
+      "extrabold": {
+        "$value": 800,
+        "$description": "점수·큰 숫자 (3회)"
+      }
+    },
+    "size": {
+      "2xs": {
+        "$value": "11px",
+        "$description": "작은 메타·견본 설명"
+      },
+      "xs": {
+        "$value": "12px",
+        "$description": "라벨·배지·캡션 (최다 123회)"
+      },
+      "sm": {
+        "$value": "13px",
+        "$description": "보조 본문·링크·표"
+      },
+      "md": {
+        "$value": "14px",
+        "$description": "본문·입력·버튼 기본"
+      },
+      "lg": {
+        "$value": "15px",
+        "$description": "큰 버튼·긴 설명 문단"
+      },
+      "xl": {
+        "$value": "16px",
+        "$description": "섹션 제목 h2"
+      },
+      "2xl": {
+        "$value": "18px",
+        "$description": "큰 h2·로고 워드마크·팝업 제목"
+      },
+      "3xl": {
+        "$value": "20px",
+        "$description": "h1(관리)·h2(강조)"
+      },
+      "4xl": {
+        "$value": "22px",
+        "$description": "h1(작은 페이지)"
+      },
+      "5xl": {
+        "$value": "26px",
+        "$description": "h1(재판 준비·폼)"
+      },
+      "6xl": {
+        "$value": "30px",
+        "$description": "h1(페이지 기본)·큰 숫자"
+      },
+      "7xl": {
+        "$value": "34px",
+        "$description": "h1(히어로)"
+      }
+    },
+    "line-height": {
+      "tight": {
+        "$value": 1.3,
+        "$description": "큰 제목"
+      },
+      "snug": {
+        "$value": 1.4,
+        "$description": "제목 h1"
+      },
+      "normal": {
+        "$value": 1.5,
+        "$description": "짧은 문장"
+      },
+      "relaxed": {
+        "$value": 1.6,
+        "$description": "카드 본문"
+      },
+      "loose": {
+        "$value": 1.7,
+        "$description": "긴 본문·설명 (최다)"
+      },
+      "_note": "시안의 1.35/1.45/1.55/1.65/1.75는 가장 가까운 단계로 흡수"
+    },
+    "letter-spacing": {
+      "logo": {
+        "$value": "-0.02em",
+        "$description": "워드마크"
+      }
+    }
+  },
+  "space": {
+    "2": {
+      "$value": "2px",
+      "$description": "세그먼트 버튼 간격"
+    },
+    "4": {
+      "$value": "4px",
+      "$description": "라벨-값"
+    },
+    "6": {
+      "$value": "6px",
+      "$description": "아이콘-글자·작은 묶음"
+    },
+    "8": {
+      "$value": "8px",
+      "$description": "기본 요소 간격 (최다)"
+    },
+    "10": {
+      "$value": "10px",
+      "$description": "카드 내부 행"
+    },
+    "12": {
+      "$value": "12px",
+      "$description": "카드 사이"
+    },
+    "14": {
+      "$value": "14px",
+      "$description": "카드 패딩(가로)"
+    },
+    "16": {
+      "$value": "16px",
+      "$description": "패딩"
+    },
+    "18": {
+      "$value": "18px",
+      "$description": "큰 카드 패딩"
+    },
+    "20": {
+      "$value": "20px",
+      "$description": "섹션 패딩"
+    },
+    "22": {
+      "$value": "22px",
+      "$description": "디자인 기준 섹션"
+    },
+    "24": {
+      "$value": "24px",
+      "$description": "페이지 좌우·섹션 사이"
+    },
+    "28": {
+      "$value": "28px",
+      "$description": "CTA 좌우"
+    },
+    "32": {
+      "$value": "32px",
+      "$description": "페이지 상단"
+    },
+    "40": {
+      "$value": "40px",
+      "$description": "큰 블록 패딩"
+    },
+    "48": {
+      "$value": "48px",
+      "$description": "페이지 하단"
+    },
+    "56": {
+      "$value": "56px",
+      "$description": "페이지 하단(긴 화면)"
+    }
+  },
+  "radius": {
+    "2xs": {
+      "$value": "3px",
+      "$description": "작은 바·12px 게이지(높이/2)"
+    },
+    "xs": {
+      "$value": "4px",
+      "$description": "인라인 칩·태그"
+    },
+    "sm": {
+      "$value": "6px",
+      "$description": "관리자 배지·작은 버튼"
+    },
+    "gauge": {
+      "$value": "7px",
+      "$description": "14px 게이지(높이/2)·세그먼트 버튼"
+    },
+    "md": {
+      "$value": "8px",
+      "$description": "작은 버튼·입력"
+    },
+    "lg": {
+      "$value": "10px",
+      "$description": "버튼·입력·행 (최다)"
+    },
+    "xl": {
+      "$value": "12px",
+      "$description": "카드"
+    },
+    "2xl": {
+      "$value": "14px",
+      "$description": "큰 섹션 카드"
+    },
+    "3xl": {
+      "$value": "16px",
+      "$description": "팝업·점선 영역·pill 버튼"
+    },
+    "pill": {
+      "$value": "20px",
+      "$description": "둥근 칩"
+    }
+  },
+  "size": {
+    "control": {
+      "xs": {
+        "$value": "28px",
+        "$description": "세그먼트(테마 토글)"
+      },
+      "sm": {
+        "$value": "34px",
+        "$description": "작은 버튼"
+      },
+      "md": {
+        "$value": "36px",
+        "$description": "헤더 로그인"
+      },
+      "lg": {
+        "$value": "40px",
+        "$description": "보조 버튼"
+      },
+      "default": {
+        "$value": "42px",
+        "$description": "기본 버튼·입력 (최다)"
+      },
+      "xl": {
+        "$value": "44px",
+        "$description": "큰 버튼·최소 터치 영역"
+      },
+      "2xl": {
+        "$value": "46px",
+        "$description": "큰 입력·검색"
+      },
+      "cta": {
+        "$value": "48px",
+        "$description": "재판 시작 CTA"
+      }
+    },
+    "icon": {
+      "sm": {
+        "$value": "14px",
+        "$description": "버튼·배지 안"
+      },
+      "md": {
+        "$value": "16px",
+        "$description": "헤더 메뉴"
+      },
+      "lg": {
+        "$value": "20px",
+        "$description": "카드 제목"
+      },
+      "logo-header": {
+        "$value": "26px",
+        "$description": "헤더 로고"
+      },
+      "_spec": "viewBox 24 · stroke 1.8 · round cap/join · stroke=currentColor · fill none"
+    },
+    "logo": {
+      "favicon": {
+        "$value": [
+          "16px",
+          "32px"
+        ],
+        "$description": ""
+      },
+      "header": {
+        "$value": "24–26px",
+        "$description": ""
+      },
+      "auth": {
+        "$value": "32–48px",
+        "$description": ""
+      },
+      "gap": {
+        "$value": "8–10px",
+        "$description": "아이콘-워드마크"
+      }
+    },
+    "gauge": {
+      "track": {
+        "$value": "14px",
+        "$description": "진행 중"
+      },
+      "track-sm": {
+        "$value": "12px",
+        "$description": "결과·목록"
+      }
+    },
+    "header-height": {
+      "$value": "65px",
+      "$description": "공통 헤더"
+    },
+    "footer-height": {
+      "$value": "64px",
+      "$description": "공통 푸터"
+    }
+  },
+  "layout": {
+    "container": {
+      "$value": "1200px",
+      "$description": "헤더·푸터·목록 max-width"
+    },
+    "content-wide": {
+      "$value": "960–980px",
+      "$description": "기록·규칙"
+    },
+    "content": {
+      "$value": "820–920px",
+      "$description": "재판 준비·상세"
+    },
+    "prose": {
+      "$value": "680px",
+      "$description": "긴 문단"
+    },
+    "form": {
+      "$value": "400–440px",
+      "$description": "로그인·회원가입"
+    },
+    "page-padding": {
+      "$value": "36px 24px 48px",
+      "$description": "main 기본 (상단 32~36 · 좌우 24 · 하단 40~56)"
+    },
+    "grid-card-min": {
+      "$value": "260px",
+      "$description": "repeat(auto-fit, minmax(260px, 1fr))"
+    },
+    "_note": "미디어쿼리 없음 · flex-wrap + auto-fit 그리드로 반응형"
+  },
+  "border": {
+    "width": {
+      "default": {
+        "$value": "1px",
+        "$description": ""
+      },
+      "selected": {
+        "$value": "2px",
+        "$description": "선택된 카드·고대비 토글"
+      },
+      "radio-on": {
+        "$value": "5px",
+        "$description": "선택된 라디오(색 accent)"
+      }
+    },
+    "style": {
+      "placeholder": {
+        "$value": "dashed",
+        "$description": "빈 자리·업로드"
+      }
+    }
+  },
+  "opacity": {
+    "disabled": {
+      "$value": 0.45,
+      "$description": "비활성 카드·버튼"
+    },
+    "muted": {
+      "$value": 0.5,
+      "$description": ""
+    }
+  },
+  "motion": {
+    "gauge": {
+      "$value": "left 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "$description": "게이지 바늘 이동"
+    }
+  },
+  "shadow": {
+    "_note": "그림자 없음 · 깊이는 surface 단계와 테두리로 표현"
+  }
+}

@@ -1,0 +1,133 @@
+.screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-32) var(--space-16);
+}
+
+.card {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.intro {
+  flex: 1 1 380px;
+  min-width: 0;
+  padding: var(--space-40);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-32);
+  background: var(--surface-2);
+  border-right: 1px solid var(--line);
+}
+
+.introTop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.headline {
+  font-size: var(--fs-6xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-loose);
+  color: var(--text-2b);
+}
+
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.points li {
+  display: flex;
+  gap: var(--space-12);
+  align-items: center;
+  font-size: var(--fs-md);
+  color: var(--text-1b);
+}
+
+.num {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--def-bg);
+  color: var(--link);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+}
+
+.formSide {
+  flex: 1 1 380px;
+  min-width: 0;
+  padding: var(--space-40);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.form label {
+  font-size: var(--fs-sm);
+  color: var(--text-1b);
+}
+
+.notice {
+  font-size: var(--fs-sm);
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-md);
+  background: var(--def-bg);
+  color: var(--text-1b);
+}
+
+.switch {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  text-align: center;
+}
+
+.switchBtn {
+  border: none;
+  background: transparent;
+  color: var(--link);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  padding: var(--space-4);
+}
+
+.foot {
+  font-size: var(--fs-xs);
+  color: var(--text-4);
+  text-align: center;
+  line-height: var(--lh-relaxed);
+}
+
+.foot a {
+  color: var(--text-3);
+}

@@ -1,0 +1,70 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.track {
+  position: relative;
+}
+
+.live {
+  height: 14px;
+  border-radius: var(--radius-gauge);
+  background: var(--gauge-track);
+}
+
+.result {
+  height: 12px;
+  border-radius: var(--radius-2xs);
+  background: var(--gauge-fill);
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 2px;
+  height: calc(100% + 6px);
+  background: var(--mute);
+}
+
+.needle {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  margin-top: -11px;
+  border-radius: 50%;
+  border: 3px solid var(--surface);
+  transition: left var(--dur-gauge) var(--ease-gauge);
+}
+
+.result .needle {
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  border-width: 2px;
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-8);
+  font-size: var(--fs-xs);
+}
+
+.def {
+  color: var(--def);
+}
+
+.pro {
+  color: var(--pro);
+}
+
+.mid {
+  color: var(--text-3);
+  text-align: center;
+}
