@@ -92,7 +92,7 @@ export function reducer(state, action) {
         card: visibleCard(state, data),
         topic: data.stage === 'CARD' ? data.topic ?? null : null,
         stageInfo: { stage: data.stage, cardNo, exchangeNo: typeof data.exchangeNo === 'number' ? data.exchangeNo : null },
-        marks: { ...state.marks, [markSeq]: { stage: data.stage, cardNo } },
+        marks: { ...state.marks, [markSeq]: { stage: data.stage, cardNo, topic: data.topic ?? null } },
         maxCard: Math.max(state.maxCard, cardNo ?? 0),
       };
     }

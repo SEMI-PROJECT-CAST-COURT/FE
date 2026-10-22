@@ -36,8 +36,9 @@ function stageLabel(info, phase) {
 function separatorText(mark, maxCard) {
   if (mark.stage === 'OPENING') return ['모두 진술', '검사 → 변호인 1번씩'];
   if (mark.stage === 'CLOSING') return ['최후 변론', maxCard >= 3 ? '3장 공방 후 진행 · 검사 → 변호인' : '2장 공방 후 게이지 47~53이 아니라 3번째 카드 없이 진행'];
-  if (mark.cardNo === 3) return ['공방 · 3번째 카드', '2장 공방 후 게이지 47~53 · 공격과 반론 3번씩'];
-  return [`공방 · ${mark.cardNo ?? ''}번째 카드`, '검사 근거 카드 중 무작위 1장 · 공격과 반론 3번씩'];
+  const title = mark.topic ? `논점 ${mark.cardNo ?? ''} : ${mark.topic}` : `논점 ${mark.cardNo ?? ''}`;
+  if (mark.cardNo === 3) return [title, '논점 2개 후 게이지 47~53 · 공격과 반론 3번씩'];
+  return [title, '공격과 반론 3번씩'];
 }
 
 export default function TrialPage() {
