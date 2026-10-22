@@ -13,7 +13,7 @@ import { DIFFICULTY_COLOR, DIFFICULTY_NAME, MODE_NAME, ROLE_NAME, TIER_RANGES, T
 import styles from './SetupPage.module.css';
 
 const MODE_INFO = [
-  { mode: 'CHICKEN', gauge: '공개', judge: '①~④ · 등급 · 변화량', cards: '현재 공방 카드만', prog: '비공개' },
+  { mode: 'CHICKEN', gauge: '공개', judge: '①~④ · 등급 · 변화량', cards: '현재 논점의 내 쪽 카드만', prog: '비공개' },
   { mode: 'CHALLENGER', gauge: '공개', judge: '변화량만', cards: '비공개', prog: '공개' },
   { mode: 'IRON', gauge: '비공개', judge: '비공개', cards: '비공개', prog: '비공개' },
 ];
