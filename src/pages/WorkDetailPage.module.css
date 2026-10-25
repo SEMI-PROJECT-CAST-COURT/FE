@@ -124,11 +124,12 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-auto-rows: 1fr;
   gap: var(--space-14);
-  align-items: start;
 }
 
 .case {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-12);
@@ -150,8 +151,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4) var(--space-12);
+  min-width: 0;
   font-size: var(--fs-xs);
   color: var(--text-2);
+  word-break: break-word;
 }
 
 .iconBtns {
@@ -190,9 +193,20 @@
   font-size: var(--fs-xl);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
+  height: calc(var(--fs-xl) * var(--lh-snug) * 2);
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.question[data-clamped] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .roles {
+  margin-top: auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-8);
@@ -223,7 +237,20 @@
   color: var(--text-2);
 }
 
+.roleSentence {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .penalties {
+  position: absolute;
+  inset: var(--space-18) var(--space-18) calc(var(--space-18) + var(--h-default) + var(--space-12));
+  z-index: 1;
+  overflow-y: auto;
+  background: var(--surface);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);

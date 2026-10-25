@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Page } from '../components/Layout';
@@ -14,6 +14,37 @@ import { DIFFICULTY_COLOR, DIFFICULTY_NAME, TIER_TITLES, resultColor, resultName
 import { formatDate } from '../lib/text';
 import styles from './WorkDetailPage.module.css';
 
+// 긴 질문은 글자 크기를 단계별로 줄여 2줄 안에 맞춘다. 가장 작은 크기로도 넘치면 2줄에서 자른다.
+const QUESTION_SIZES = ['--fs-xl', '--fs-lg', '--fs-md', '--fs-sm', '--fs-xs'];
+
+function CaseQuestion({ text }) {
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const fit = () => {
+      delete el.dataset.clamped;
+      for (const size of QUESTION_SIZES) {
+        el.style.fontSize = `var(${size})`;
+        if (el.scrollHeight <= el.clientHeight + 1) return;
+      }
+      el.dataset.clamped = '';
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    const observer = new ResizeObserver(fit);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [text]);
+
+  return (
+    <h3 ref={ref} className={styles.question} title={text}>
+      {text}
+    </h3>
+  );
+}
+
 function RoleBox({ name, color, role, difficulty, record }) {
   return (
     <div className={styles.roleBox}>
@@ -26,15 +57,20 @@ function RoleBox({ name, color, role, difficulty, record }) {
           <div className={styles.result} style={{ color: resultColor(role, record.penaltyTier) }}>
             {resultName(role, record.penaltyTier)}
           </div>
-          <div className={styles.sentence}>
+          <div className={styles.roleSentence} title={record.sentence || undefined}>
             {TIER_TITLES[record.penaltyTier - 1]}
             {record.sentence ? ` · ${record.sentence}` : ''}
           </div>
         </>
       ) : (
-        <div className={styles.result} style={{ color: 'var(--text-3)' }}>
-          미도전
-        </div>
+        <>
+          <div className={styles.result} style={{ color: 'var(--text-3)' }}>
+            미도전
+          </div>
+          <div className={styles.roleSentence} aria-hidden="true">
+            &nbsp;
+          </div>
+        </>
       )}
     </div>
   );
@@ -185,7 +221,7 @@ export default function WorkDetailPage() {
                     </div>
                   ) : null}
                 </div>
-                <h3 className={styles.question}>{c.question}</h3>
+                <CaseQuestion text={c.question} />
                 <div className={styles.roles}>
                   <RoleBox name="변호인" color="var(--def)" role="DEFENSE" difficulty={c.difficulty?.def} record={c.my?.def} />
                   <RoleBox name="검사" color="var(--pro)" role="PROSECUTION" difficulty={c.difficulty?.pro} record={c.my?.pro} />
