@@ -142,15 +142,15 @@
 .caseTop {
   display: flex;
   gap: var(--space-8);
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   min-height: 24px;
 }
 
 .people {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4) var(--space-12);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-4) var(--space-8);
   min-width: 0;
   font-size: var(--fs-xs);
   color: var(--text-2);

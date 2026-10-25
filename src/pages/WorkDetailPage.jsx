@@ -203,12 +203,10 @@ export default function WorkDetailPage() {
               <article key={c.caseId} className={styles.case}>
                 <div className={styles.caseTop}>
                   <div className={styles.people}>
-                    <span>
-                      <span style={{ color: 'var(--pro)' }}>피의자</span> {c.suspect}
-                    </span>
-                    <span>
-                      <span style={{ color: 'var(--def)' }}>피해자</span> {c.victim}
-                    </span>
+                    <span style={{ color: 'var(--pro)' }}>피의자</span>
+                    <span>{c.suspect}</span>
+                    <span style={{ color: 'var(--def)' }}>피해자</span>
+                    <span>{c.victim}</span>
                   </div>
                   {isAdmin ? (
                     <div className={styles.iconBtns}>
