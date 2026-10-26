@@ -204,9 +204,9 @@ export default function WorkDetailPage() {
                 <div className={styles.caseTop}>
                   <div className={styles.people}>
                     <span style={{ color: 'var(--pro)' }}>피의자</span>
-                    <span>{c.suspect}</span>
+                    <span title={c.suspect}>{c.suspect}</span>
                     <span style={{ color: 'var(--def)' }}>피해자</span>
-                    <span>{c.victim}</span>
+                    <span title={c.victim}>{c.victim}</span>
                   </div>
                   {isAdmin ? (
                     <div className={styles.iconBtns}>
