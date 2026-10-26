@@ -1,0 +1,34 @@
+.list {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+}
+
+.tab {
+  flex: 1;
+  height: var(--h-lg);
+  padding: 0 var(--space-16);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-3);
+  font-size: var(--fs-md);
+  cursor: pointer;
+}
+
+.tab:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.on {
+  background: var(--surface-3);
+  color: var(--text);
+  font-weight: var(--fw-bold);
+}
+
+.auth .on {
+  background: var(--surface-4);
+}

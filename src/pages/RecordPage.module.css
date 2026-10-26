@@ -1,0 +1,350 @@
+.page {
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-40);
+}
+
+.back {
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  padding: var(--space-10) var(--space-16);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tab:disabled {
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+}
+
+.tabOn {
+  background: var(--def-bg);
+  border-color: var(--def-line-2);
+}
+
+.tabTitle {
+  display: inline-flex;
+  gap: var(--space-6);
+  align-items: center;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+}
+
+.tabSub {
+  font-size: var(--fs-xs);
+  color: var(--text-1b);
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16) var(--space-32);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-22);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+
+.caseInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+  flex: 999 1 420px;
+}
+
+.meta {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+
+.deleted {
+  color: var(--danger);
+}
+
+.h1 {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12);
+  flex: 1 1 420px;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-14);
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+}
+
+.factKey {
+  font-size: var(--fs-2xs);
+  color: var(--text-3);
+}
+
+.factValue {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.factSub {
+  font-size: var(--fs-xs);
+  color: var(--text-1b);
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-18);
+  align-items: flex-start;
+}
+
+.talks {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-20);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+
+/* 재판 화면 대화 영역(600px)과 같은 높이에서 스크롤 */
+.talkScroll {
+  position: relative;
+  max-height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding-right: var(--space-4);
+}
+
+.talksHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-8) var(--space-12);
+}
+
+.h2 {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-12);
+  font-size: var(--fs-xs);
+}
+
+.sep {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding-top: var(--space-6);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-2);
+}
+
+.sepLine {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-14);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--surface-3);
+}
+
+.key {
+  border-color: var(--admin);
+}
+
+.rowHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-6) var(--space-12);
+  align-items: baseline;
+}
+
+.rowWho {
+  display: flex;
+  gap: var(--space-8);
+  align-items: baseline;
+  min-width: 0;
+}
+
+.no {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.who {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.grade {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.keyBadge {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  color: var(--surface);
+  background: var(--admin);
+  border-radius: var(--radius-xs);
+  padding: 1px var(--space-6);
+}
+
+.delta {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.mini {
+  position: relative;
+  height: 8px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-4);
+}
+
+.miniCenter {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 2px;
+  height: 12px;
+  background: var(--mute);
+}
+
+.miniDot {
+  position: absolute;
+  top: -4px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+}
+
+.text {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--text-1b);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.aside {
+  flex: 1 1 320px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-18);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+
+.summaryText {
+  font-size: var(--fs-md);
+  line-height: var(--lh-loose);
+  color: var(--text-1b);
+  white-space: pre-wrap;
+}
+
+.caption {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.moment {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-10) var(--space-12);
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+}
+
+.momentText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.momentBody {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--text-1b);
+}
+
+.momentDelta {
+  flex-shrink: 0;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+}
+
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.grow {
+  flex: 1 1 140px;
+}

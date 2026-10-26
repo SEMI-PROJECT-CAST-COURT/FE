@@ -1,0 +1,241 @@
+.page {
+  padding-top: 36px;
+}
+
+.back {
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.people {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+
+.h1 {
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+}
+
+.summaryBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-14) var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+
+.boxLabel {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--text-2);
+}
+
+.summary {
+  font-size: var(--fs-md);
+  line-height: var(--lh-loose);
+  color: var(--text-1b);
+  white-space: pre-wrap;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.h2 {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-card-min), 1fr));
+  gap: var(--space-12);
+}
+
+.option,
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: flex-start;
+  text-align: left;
+  padding: var(--space-18);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.selected {
+  border-color: var(--primary);
+}
+
+.disabled {
+  border-color: var(--surface-3);
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.optionTop {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-8);
+}
+
+.roleName {
+  display: inline-flex;
+  gap: var(--space-8);
+  align-items: center;
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+}
+
+.diff {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.goal {
+  font-size: var(--fs-md);
+  color: var(--text-1b);
+}
+
+.roleNote {
+  display: inline-flex;
+  gap: var(--space-4);
+  align-items: center;
+  font-size: var(--fs-xs);
+}
+
+.recordLink {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.modeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-10);
+}
+
+.mode {
+  padding: var(--space-14);
+}
+
+.mode:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.modeName {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.modeInfo {
+  font-size: var(--fs-xs);
+  line-height: var(--lh-loose);
+  color: var(--text-2b);
+}
+
+.tableHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-8);
+}
+
+.penalties {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.penalty {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-12);
+  align-items: baseline;
+  padding: var(--space-10) var(--space-14);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.range {
+  width: 60px;
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.tierTitle {
+  width: 92px;
+  flex-shrink: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.sentence {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-1b);
+}
+
+.myResult {
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-14) var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-loose);
+  color: var(--text-1b);
+}
+
+.rulesTitle {
+  font-weight: var(--fw-bold);
+  color: var(--text);
+}
+
+.startRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pick {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.pick b {
+  color: var(--text);
+}

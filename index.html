@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>CAST COURT</title>
+    <script>
+      // 첫 화면 깜빡임 방지: 렌더 전에 저장된 테마·고대비를 html 속성으로 적용한다.
+      (function () {
+        var root = document.documentElement;
+        var pref = 'system';
+        try { pref = localStorage.getItem('cc-theme') || 'system'; } catch (e) { /* 저장소 차단 */ }
+        var light = pref === 'light';
+        if (pref === 'system') {
+          try { light = window.matchMedia('(prefers-color-scheme: light)').matches; } catch (e) { /* 미지원 */ }
+        }
+        root.setAttribute('data-theme', light ? 'light' : 'dark');
+        var hc = false;
+        try { hc = localStorage.getItem('cc-contrast') === 'high'; } catch (e) { /* 저장소 차단 */ }
+        if (hc) root.setAttribute('data-contrast', 'high');
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

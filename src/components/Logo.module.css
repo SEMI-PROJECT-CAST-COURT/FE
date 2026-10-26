@@ -1,0 +1,27 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--text);
+}
+
+.mark {
+  color: var(--def);
+}
+
+.word {
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-logo);
+}
+
+.header .word {
+  font-size: var(--fs-2xl);
+}
+
+.auth {
+  gap: var(--space-10);
+}
+
+.auth .word {
+  font-size: var(--fs-4xl);
+}

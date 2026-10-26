@@ -1,0 +1,136 @@
+.btn {
+  height: var(--h-default);
+  padding: 0 var(--space-16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.primary:hover {
+  color: var(--on-primary);
+}
+
+.primary:disabled {
+  background: var(--surface-4);
+  color: var(--text-4);
+}
+
+.secondary {
+  border-color: var(--line-3);
+  background: transparent;
+  color: var(--text);
+}
+
+.secondary:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.secondary:disabled,
+.dangerOutline:disabled,
+.admin:disabled,
+.text:disabled,
+.danger:disabled {
+  opacity: var(--opacity-disabled);
+}
+
+.danger {
+  background: var(--danger-btn);
+  color: var(--on-primary);
+}
+
+.danger:hover {
+  color: var(--on-primary);
+}
+
+.dangerOutline {
+  border-color: var(--danger-line-2);
+  background: transparent;
+  color: var(--danger);
+}
+
+.dangerOutline:hover {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.text {
+  background: transparent;
+  color: var(--link);
+  padding: 0 var(--space-6);
+}
+
+.text:hover {
+  color: var(--link-hover);
+}
+
+.admin {
+  border-color: var(--admin-line);
+  background: var(--admin-bg);
+  color: var(--admin);
+}
+
+.admin:hover {
+  color: var(--admin);
+  border-color: var(--admin);
+}
+
+.sm {
+  height: var(--h-sm);
+  padding: 0 var(--space-12);
+  font-size: var(--fs-sm);
+  border-radius: var(--radius-md);
+}
+
+.md {
+  height: var(--h-md);
+  padding: 0 var(--space-12);
+  font-size: var(--fs-sm);
+  border-radius: var(--radius-md);
+}
+
+.lg {
+  height: var(--h-lg);
+  padding: 0 var(--space-14);
+}
+
+.xl {
+  height: var(--h-xl);
+  padding: 0 var(--space-18);
+}
+
+.cta {
+  height: var(--h-cta);
+  padding: 0 var(--space-28);
+  font-size: var(--fs-lg);
+}
+
+.block {
+  width: 100%;
+}
+
+.spinner {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: global(cc-spin) 0.8s linear infinite;
+}
